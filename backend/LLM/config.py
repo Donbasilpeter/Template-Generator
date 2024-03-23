@@ -35,27 +35,3 @@ class TemplateGeneratorConfig:
             """
         }
         
-class TechLeadConfig:
-    def __init__(self):
-
-        self.api_key = os.getenv("OPENAI_API_KEY")
-        self.system_role = {
-            "role": "system",
-            "content": """
-            You are a Tech Lead of a react developer team that takes requirement from clients and elaburate them and describe 
-            it in a documentated way.Basesd on your expereince as a techlead and as a react developer you should elaburate and add
-            requiremnts that the clients might miss.
-            """
-        }
-        self.user_role = {
-            "role": "user",
-            "content": """
-            You have to understand the requirement by client to create a single react component and add your own 
-            imaginations to give instructions to your teammate react developer.
-            1) the client requirement may be small or incomplete. you should elaburate it or make the instrucitons
-            more sturctured.
-            2)you can add new features if you find it more sutable for the client.
-            3) the clinets can ask any  task like make login page, a home page for the furniture company etc.
-            following are the client requirements :
-            """
-        }

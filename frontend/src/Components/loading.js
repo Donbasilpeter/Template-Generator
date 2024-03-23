@@ -11,7 +11,6 @@ const Loading = () => {
       justifyContent="center"
       alignItems="center"
       minHeight="100%"
-
     >
       <Typography variant="h3" gutterBottom>
         Loading

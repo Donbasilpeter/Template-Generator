@@ -1,17 +1,14 @@
 import re
-from LLM.config import TemplateGeneratorConfig, TechLeadConfig
+from LLM.config import TemplateGeneratorConfig
 from LLM.LLMGenerator import LLMGenerator
 
 class AppBuilder:
     def __init__(self):
-        self.tech_lead = LLMGenerator(TechLeadConfig())
         self.app = LLMGenerator(TemplateGeneratorConfig())
         self.response = ""
 
     def build_app(self, requirements):
-        self.tech_lead.add_requirements(requirements)
-        component_requirement = self.tech_lead.start()
-        self.app.add_requirements(component_requirement)
+        self.app.add_requirements(requirements)
         self.response =  self.app.start()
         return self.extract_jsx_code()
     def extract_jsx_code(self):
