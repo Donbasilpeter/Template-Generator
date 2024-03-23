@@ -30,6 +30,7 @@ class TemplateGeneratorConfig:
             9)all height and weight calculations be based on % that is height:100%
             10)exclude functions like onclick,onhandle,onchange etc,import and export component part
             11)include more styling
+            12)The component should look professional
             following are the requirements :
             """
         }
