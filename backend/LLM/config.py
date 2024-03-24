@@ -31,7 +31,15 @@ class TemplateGeneratorConfig:
             10) Exclude functions like onclick, onhandle, onchange, Import and export component part.
             11) Include more styling.
             12) The component should look professional.
-            Following are the requirements :
+            
+            Example of a requirement : 
+            Give a component for displaying a title.
+            The output is :
+                <div>
+                <h1>This is a Title</h1>
+                </div>
+                
+            Following are the real requirements :
             """
         }
         

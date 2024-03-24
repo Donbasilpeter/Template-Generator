@@ -16,14 +16,7 @@ class AppBuilder:
         match = re.search(pattern, self.response)
         if match:
             self.response = match.group(1).strip()
-            return self.extract_jsx_from_return()
-        else:
-            return None
-    def extract_jsx_from_return(self):
-        pattern = re.compile(r'return\s*\((.*?)\);', re.DOTALL)
-        match = pattern.search(self.response)
-        if match:
-            return match.group(1).strip()
+            return self.response
         else:
             return None
     
