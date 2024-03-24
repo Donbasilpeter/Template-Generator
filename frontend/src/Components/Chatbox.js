@@ -40,7 +40,6 @@ function ChatBox() {
       const jsContent = `
       import React from 'react';
       function Template() {
-        const template = useSelector((state) => state.template.code);
         return (
           ${template}
           );
