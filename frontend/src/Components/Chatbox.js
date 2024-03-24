@@ -1,13 +1,16 @@
 // ChatBox.js
 import React, { useState } from 'react';
-import { TextField, Box } from '@mui/material';
+import { TextField, Box, InputAdornment } from '@mui/material';
 import { submitDescription } from '../Services/apiService'; 
-import { useDispatch } from 'react-redux'
+import { useDispatch,useSelector } from 'react-redux'
 import { setTemplate,setIsLoading } from '../reducers/templateSlice';
+import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
+
 
 function ChatBox() {
   const [description, setDescription] = useState('');
   const dispatch = useDispatch()
+  const template = useSelector((state) => state.template.code);
 
   const handleChange = (event) => {
     setDescription(event.target.value);
@@ -31,6 +34,34 @@ function ChatBox() {
     }
   };
 
+    // Function to generate JavaScript file content
+    const generateJSFileContent = () => {
+      // Example JavaScript code
+      const jsContent = `
+      import React from 'react';
+      function Template() {
+        const template = useSelector((state) => state.template.code);
+        return (
+          ${template}
+          );
+        }
+
+      export default Template; 
+      `;
+      return jsContent;
+    };
+
+  // Function to trigger JavaScript file download
+  const downloadJSFile = () => {
+    const jsContent = generateJSFileContent();
+    const element = document.createElement("a");
+    const file = new Blob([jsContent], { type: 'text/javascript' });
+    element.href = URL.createObjectURL(file);
+    element.download = "template.js";
+    document.body.appendChild(element); // Required for Firefox
+    element.click();
+  };
+
   return (
     <Box
       sx={{
@@ -44,24 +75,35 @@ function ChatBox() {
         margin: 'auto',
       }}
     >
-   <TextField
-      fullWidth
-      variant="outlined"
-      value={description}
-      onChange={handleChange}
-      onKeyDown={handleKeyDown} // Call handleSubmit on Enter
-      label="Enter your description here..."
-      sx={{
-        mb: 2,
-        flexGrow: 1,
-        '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-          borderColor: '#34312D', // Change the border color when focused
-        },
-        '& .MuiInputLabel-outlined.Mui-focused': {
-          color: '#34312D', // Change the label color when focused
-        },
-      }}
-    />
+      <TextField
+        fullWidth
+        variant="outlined"
+        value={description}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown} // Call handleSubmit on Enter
+        label="Enter your description here..."
+        sx={{
+          mb: 2,
+          flexGrow: 1,
+          '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+            borderColor: '#34312D', // Change the border color when focused
+          },
+          '& .MuiInputLabel-outlined.Mui-focused': {
+            color: '#34312D', // Change the label color when focused
+          },
+          '& .download-icon': {
+            cursor: 'pointer', // Show pointer cursor on hover
+          },
+        }}
+        InputProps={{
+          endAdornment: 
+          template? (
+            <InputAdornment position="end">
+              <DownloadForOfflineIcon  className="download-icon" onClick={downloadJSFile}/>
+            </InputAdornment>
+          ) : null,
+        }}
+      />
     </Box>
   );
 }
