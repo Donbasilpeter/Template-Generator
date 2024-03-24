@@ -2,8 +2,8 @@ import React from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-const WelcomeTemplate = () => {
 
+const WelcomeTemplate = () => {
   return (
     <Box
       display="flex"
@@ -11,14 +11,12 @@ const WelcomeTemplate = () => {
       justifyContent="center"
       alignItems="center"
       minHeight="100%"
-
-
     >
       <Typography variant="h3" gutterBottom>
-        Welcome to Template Generator
+        Template Generator
       </Typography>
       <Typography variant="body1">
-        We're thrilled to have you on board! Let's work together to create something extraordinary.
+        We're thrilled to have you on board! Let's create a React component tailored to your requirements.
       </Typography>
     </Box>
   );
