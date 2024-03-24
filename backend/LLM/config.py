@@ -38,7 +38,7 @@ class TemplateGeneratorConfig:
                 <div>
                 <h1>This is a Title</h1>
                 </div>
-                
+            Like above example only output the jsx code in a div. dont give import and export part.
             Following are the real requirements :
             """
         }
