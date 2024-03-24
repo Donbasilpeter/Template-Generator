@@ -10,7 +10,7 @@ class LLMGenerator:
     def start(self):
         self.client.api_key = self.api_key
         completion = self.client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4-0125-preview",
             messages=[self.system_role, self.user_role]
         )
         return completion.choices[0].message.content
