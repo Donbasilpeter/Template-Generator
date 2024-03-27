@@ -1,17 +1,14 @@
 import re
-from LLM.config import TemplateGeneratorConfig, TechLeadConfig
+from LLM.config import TemplateGeneratorConfig
 from LLM.LLMGenerator import LLMGenerator
 
 class AppBuilder:
     def __init__(self):
-        self.tech_lead = LLMGenerator(TechLeadConfig())
         self.app = LLMGenerator(TemplateGeneratorConfig())
         self.response = ""
 
     def build_app(self, requirements):
-        self.tech_lead.add_requirements(requirements)
-        component_requirement = self.tech_lead.start()
-        self.app.add_requirements(component_requirement)
+        self.app.add_requirements(requirements)
         self.response =  self.app.start()
         return self.extract_jsx_code()
     def extract_jsx_code(self):
@@ -19,14 +16,7 @@ class AppBuilder:
         match = re.search(pattern, self.response)
         if match:
             self.response = match.group(1).strip()
-            return self.extract_jsx_from_return()
-        else:
-            return None
-    def extract_jsx_from_return(self):
-        pattern = re.compile(r'return\s*\((.*?)\);', re.DOTALL)
-        match = pattern.search(self.response)
-        if match:
-            return match.group(1).strip()
+            return self.response
         else:
             return None
     

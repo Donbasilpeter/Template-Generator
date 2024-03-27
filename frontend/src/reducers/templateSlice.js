@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-    code: ""
+    code: "",
+    isLoading :false
 }
 
 export const templateSlice = createSlice({
@@ -14,10 +15,17 @@ export const templateSlice = createSlice({
     getTemplate: (state) => {
         return state.code
       },
+      setIsLoading: (state, action) => {
+        state.isLoading = action.payload
+      },
+      getIsLoading: (state) => {
+          return state.isLoading
+        },
   },
+
 })
 
 // Action creators are generated for each case reducer function
-export const { setTemplate, getTemplate } = templateSlice.actions
+export const { setTemplate, getTemplate,setIsLoading,getIsLoading } = templateSlice.actions
 
 export default templateSlice.reducer
