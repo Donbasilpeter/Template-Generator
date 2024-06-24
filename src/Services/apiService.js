@@ -1,15 +1,9 @@
-// apiService.js
-import axios from 'axios';
+import { ReactComponentAgent } from "../LLM/agents";
 
-const BASE_URL = 'http://localhost:8000';
 
 export const submitDescription = async (description) => {
   try {
-    const response = await axios.post(`${BASE_URL}`, { description,sessionId:"1243"}, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    const response = await ReactComponentAgent(description).then((res=>{console.log(res)}))
     console.log(response.data.result)
     return response.data.result;
   } catch (error) {
