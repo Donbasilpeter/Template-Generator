@@ -57,7 +57,7 @@ app.post('/', async (req, res) => {
     const { description, sessionId } = req.body;
     
     try {
-        const response = await withMessageHistory.stream({ description }, { configurable: { sessionId } });
+        const response = await withMessageHistory.invoke({ description }, { configurable: { sessionId } });
         res.json({ result: response });
     } catch (error) {
         console.error('Error processing request:', error);
