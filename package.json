@@ -1,6 +1,7 @@
 {
   "name": "frontend",
   "version": "0.1.0",
+  "main": "electron/main.js",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -25,7 +26,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "electron": "concurrently \"npm:start\" \"wait-on http://localhost:3000 && electron .\""
   },
   "eslintConfig": {
     "extends": [
@@ -46,9 +48,13 @@
     ]
   },
   "devDependencies": {
+    "typescript": "^5.5.2",
     "@babel/core": "^7.24.3",
     "@babel/plugin-transform-react-jsx": "^7.23.4",
     "@babel/preset-react": "^7.24.1",
-    "sass": "^1.72.0"
+    "concurrently": "^8.2.2",
+    "electron": "^31.0.2",
+    "sass": "^1.72.0",
+    "wait-on": "^7.2.0"
   }
 }
