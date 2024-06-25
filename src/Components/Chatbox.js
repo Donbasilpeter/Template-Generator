@@ -42,27 +42,12 @@ function ChatBox() {
     }
   };
 
-    // Function to generate JavaScript file content
-    const generateJSFileContent = () => {
-      // Example JavaScript code
-      const jsContent = `
-      import React from 'react';
-      function Template() {
-        return (
-          ${template}
-          );
-        }
 
-      export default Template; 
-      `;
-      return jsContent;
-    };
 
   // Function to trigger JavaScript file download
   const downloadJSFile = () => {
-    const jsContent = generateJSFileContent();
     const element = document.createElement("a");
-    const file = new Blob([jsContent], { type: 'text/javascript' });
+    const file = new Blob([template], { type: 'text/javascript' });
     element.href = URL.createObjectURL(file);
     element.download = "template.js";
     document.body.appendChild(element); // Required for Firefox

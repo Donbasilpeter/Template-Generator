@@ -1,5 +1,5 @@
 import React from 'react';
-import Template from './template.js';
+import Template from '../Data/template.js';
 import ChatBox from './Chatbox.js';
 import WelcomeTemplate from './welcome.js';
 import { useSelector } from 'react-redux';
