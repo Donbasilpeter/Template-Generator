@@ -13,8 +13,6 @@ const promptTemplate = ChatPromptTemplate.fromMessages([
 // Create a parser to parse the output from the model
 const parser = new StringOutputParser();
 const openAIApiKey = process.env.REACT_APP_OPENAI_API_KEY
-console.log(openAIApiKey)
-console.log(openAIApiKey)
 
 
 // Initialize the OpenAI model
