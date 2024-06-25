@@ -14,18 +14,21 @@ export const templateSlice = createSlice({
     },
     getTemplate: (state) => {
         return state.code
-      },
-      setIsLoading: (state, action) => {
+    },
+    clearTemplate: (state) => {
+        state.code = ''; // Clear the template code
+    },
+    setIsLoading: (state, action) => {
         state.isLoading = action.payload
-      },
-      getIsLoading: (state) => {
+    },
+    getIsLoading: (state) => {
           return state.isLoading
-        },
+    },
   },
 
 })
 
 // Action creators are generated for each case reducer function
-export const { setTemplate, getTemplate,setIsLoading,getIsLoading } = templateSlice.actions
+export const { setTemplate, getTemplate,setIsLoading,clearTemplate } = templateSlice.actions
 
 export default templateSlice.reducer
