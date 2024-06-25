@@ -20,7 +20,7 @@ function ChatBox() {
     try {
       console.log("Submitted description:", description);
       dispatch(setIsLoading(true))
-      await submitDescription(description).then((template)=>{
+      await submitDescription(description,template).then((template)=>{
         if(template) dispatch(setTemplate(template))
         dispatch(setIsLoading(false))
         window.electronAPI.saveFile(template);
