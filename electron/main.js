@@ -27,7 +27,7 @@ app.on('window-all-closed', () => {
 
 // Listen for save-file event
 ipcMain.on('save-file', (event, data) => {
-    const filePath = path.join(app.getAppPath(), '/src/Data/template.js'); // Save file in the root directory
+    const filePath = path.join(app.getAppPath(), './demo-app/src/App.js'); // Save file in the root directory
 
     return fs.writeFile(filePath, data, (err) => {
         if (err) {
