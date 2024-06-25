@@ -23,13 +23,14 @@
     "sass": "^1.77.6",
     "web-vitals": "^2.1.4"
   },
-  "scripts": {
-    "start": "set BROWSER=none&& react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "electron": "concurrently \"npm:start\" \"wait-on http://localhost:3000 && electron .\""
-  },
+"scripts": {
+  "start": "set BROWSER=none&& react-scripts start",
+  "build": "react-scripts build",
+  "test": "react-scripts test",
+  "eject": "react-scripts eject",
+  "start-demo": "set BROWSER=none&& cd demo-app && npm start",
+  "electron": "concurrently \"npm:start\" \"npm run start-demo\" \"wait-on http://localhost:3000 http://localhost:3001 && electron .\""
+},
   "eslintConfig": {
     "extends": [
       "react-app",
