@@ -12,4 +12,12 @@ window.addEventListener('DOMContentLoaded', () => {
       replaceText(`${type}-version`, process.versions[type]);
     }
   });
+
+  const { contextBridge, ipcRenderer } = require('electron');
+
+contextBridge.exposeInMainWorld('electronAPI', {
+    saveFile: (data) => ipcRenderer.send('save-file', data),
+    onFileSaved: (callback) => ipcRenderer.on('file-saved', (event, message) => callback(message))
+});
+
   

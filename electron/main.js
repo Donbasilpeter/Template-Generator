@@ -1,30 +1,38 @@
-// electron/main.js
-
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
+const fs = require('fs');
 const path = require('path');
 
-function createWindow() {
-  const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
-    },
-  });
+let mainWindow;
 
-  mainWindow.loadURL('http://localhost:3000');
+function createWindow() {
+    mainWindow = new BrowserWindow({
+        width: 800,
+        height: 600,
+        webPreferences: {
+            nodeIntegration: false,
+            contextIsolation: true,
+            preload: path.join(__dirname, 'preload.js')
+        }
+    });
+
+    mainWindow.loadURL('http://localhost:3000'); // Adjust the URL to your React app's location
 }
 
 app.on('ready', createWindow);
-
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   }
 });
 
-app.on('activate', () => {
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow();
-  }
+// Listen for save-file event
+ipcMain.on('save-file', (event, data) => {
+    const filePath = path.join(app.getAppPath(), 'response.js'); // Save file in the root directory
+    fs.writeFile(filePath, data, (err) => {
+        if (err) {
+            event.reply('file-saved', 'error');
+            return;
+        }
+        event.reply('file-saved', 'success');
+    });
 });

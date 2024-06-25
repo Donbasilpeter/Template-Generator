@@ -3,6 +3,7 @@ import { StringOutputParser } from "@langchain/core/output_parsers";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 import { react_developer_system_prompt } from "./prompts/index.js"; // Adjust the path as necessary
 
+
 // Create a prompt template using predefined messages and placeholders
 const promptTemplate = ChatPromptTemplate.fromMessages([
     ["system", react_developer_system_prompt],
@@ -11,9 +12,13 @@ const promptTemplate = ChatPromptTemplate.fromMessages([
 
 // Create a parser to parse the output from the model
 const parser = new StringOutputParser();
+const openAIApiKey = process.env.REACT_APP_OPENAI_API_KEY
+console.log(openAIApiKey)
+console.log(openAIApiKey)
+
 
 // Initialize the OpenAI model
-const model = new ChatOpenAI({ model: "gpt-4o" });
+const model = new ChatOpenAI({ model: "gpt-3.5-turbo",openAIApiKey:openAIApiKey});
 
 // Create a chain by piping the prompt template through the model and then through the parser
 const chain = promptTemplate.pipe(model).pipe(parser);
