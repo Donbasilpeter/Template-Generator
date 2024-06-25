@@ -18,7 +18,7 @@ console.log(openAIApiKey)
 
 
 // Initialize the OpenAI model
-const model = new ChatOpenAI({ model: "gpt-3.5-turbo",openAIApiKey:openAIApiKey});
+const model = new ChatOpenAI({ model: "gpt-4o",openAIApiKey:openAIApiKey});
 
 // Create a chain by piping the prompt template through the model and then through the parser
 const chain = promptTemplate.pipe(model).pipe(parser);

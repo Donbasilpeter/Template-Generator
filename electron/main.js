@@ -28,11 +28,12 @@ app.on('window-all-closed', () => {
 // Listen for save-file event
 ipcMain.on('save-file', (event, data) => {
     const filePath = path.join(app.getAppPath(), '/src/Data/template.js'); // Save file in the root directory
-    fs.writeFile(filePath, data, (err) => {
+
+    return fs.writeFile(filePath, data, (err) => {
         if (err) {
-            event.reply('file-saved', 'error');
-            return;
+            return 'error'
+            ;
         }
-        event.reply('file-saved', 'success');
-    });
+        return  'success'
+    })
 });

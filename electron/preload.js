@@ -13,11 +13,11 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  const { contextBridge, ipcRenderer } = require('electron');
+// preload.js
+const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('electronAPI', {
-    saveFile: (data) => ipcRenderer.send('save-file', data),
-    onFileSaved: (callback) => ipcRenderer.on('file-saved', (event, message) => callback(message))
+  saveFile: (data) => ipcRenderer.send("save-file", data)
 });
 
   

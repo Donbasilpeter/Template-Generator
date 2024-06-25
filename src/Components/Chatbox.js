@@ -23,14 +23,7 @@ function ChatBox() {
       await submitDescription(description,template).then((template)=>{
         if(template) dispatch(setTemplate(template))
         dispatch(setIsLoading(false))
-        window.electronAPI.saveFile(template);
-        window.electronAPI.onFileSaved((message) => {
-          if (message === 'success') {
-              alert('File has been saved successfully!');
-          } else {
-              alert('Failed to save file.');
-          }
-      });
+        window.electronAPI.saveFile(template)
       });
     } catch (error) {
     }
