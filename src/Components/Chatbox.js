@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { TextField, Box, InputAdornment, Button } from '@mui/material';
-import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTemplate, setIsLoading, clearTemplate } from '../reducers/templateSlice';
 import { submitDescription } from '../Services/apiService';
+import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
+import { setIsChatbox } from '../reducers/chatboxSlice';
+
 
 function ChatBox() {
   const [description, setDescription] = useState('');
@@ -44,46 +45,72 @@ function ChatBox() {
 
   const clearTemplateHandler = () => {
     dispatch(clearTemplate());
+    dispatch(setIsChatbox(false));
+    
   };
 
   return (
-    <Box sx={{
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        m: 2,
-        p: 2,
-        maxWidth: "80%",
-        margin: 'auto',
-      }}>
-      <TextField
-        fullWidth
-        variant="outlined"
-        value={description}
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
-        label="Enter your description here..."
-        sx={{
-          mb: 2,
-          flexGrow: 1,
-          '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-            borderColor: '#34312D',
-          },
-          '& .MuiInputLabel-outlined.Mui-focused': {
-            color: '#34312D',
-          },
-        }}
-        InputProps={{
-          endAdornment: template ? (
-            <InputAdornment position="end">
-              <DownloadForOfflineIcon className="download-icon" onClick={downloadJSFile}/>
-              <Button onClick={clearTemplateHandler} sx={{ ml: 1, color: 'white', bgcolor: '#34312D', '&:hover': { bgcolor: '#2b2a29' } }}>Clear</Button>
-            </InputAdornment>
-          ) : null,
-        }}
-      />
-    </Box>
+    <div style={{
+      width: '100%',
+      height: '100%',
+      backgroundColor: '#333',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      boxSizing: 'border-box'
+    }}>
+      <h3 style={{ fontSize: '1.4em', color: '#fff', marginBottom: '10px' }}>Chat with Us</h3>
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <textarea
+          placeholder="Enter your description here..."
+          value={description}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+          style={{
+            width: '70%',
+            padding: '10px',
+            borderRadius: '10px',
+            border: '1px solid #444',
+            marginBottom: '10px',
+            fontSize: '1em',
+            backgroundColor: '#444',
+            color: '#fff',
+            boxSizing: 'border-box'
+          }}
+        />
+        {template && (
+          <div style={{ display: 'flex', alignItems: 'center', marginLeft: '10px' }}>
+            <DownloadForOfflineIcon
+              onClick={downloadJSFile}
+              style={{
+                color: '#fff',
+                fontSize: '2em',
+                cursor: 'pointer',
+                marginRight: '10px'
+              }}
+            />
+            <button style={{
+              backgroundColor: '#4ca1af',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '50px',
+              padding: '10px 20px',
+              fontSize: '1em',
+              cursor: 'pointer',
+              transition: 'background-color 0.3s',
+              fontWeight: 'bold'
+              
+            }}
+              onClick={clearTemplateHandler}
+              onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#2b2a29'}
+              onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#34312D'}
+            >
+              Clear
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
 

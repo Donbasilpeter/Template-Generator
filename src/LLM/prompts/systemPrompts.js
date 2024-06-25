@@ -17,7 +17,8 @@ Main task : Create a react component as per the requirement.
 11) Include more styling.
 12) The component should look professional.
 13) Funtion name of the created Component should always be Template.
-14) the first word of the output should always be import.
+14) The first word of the output should always be import and last word should be template as per the folloiwng example.
+
 
 Example of a requirement : 
 Give a component for displaying a title.
