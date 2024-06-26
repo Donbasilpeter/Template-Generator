@@ -5,7 +5,8 @@ import {
      react_developer_system_prompt,
      project_manager_system_prompt,
      react_app_developer_system_prompt,
-     react_app_reviewer_system_prompt 
+     react_app_reviewer_system_prompt,
+     react_app_updater_system_prompt 
 } from "./prompts/index.js"; // Adjust the path as necessary
 
 
@@ -77,6 +78,21 @@ export  const  ReactAppReviewerAgent  = async (description,code) =>{
         ]);
         const chain = promptTemplate.pipe(model).pipe(parser);
         const response = await chain.invoke({ description,code });
+        return response;
+    } catch (error) {
+        console.error('Error processing request:', error);
+        throw new Error('Internal Server Error');
+    }
+}
+
+export  const  ReactAppUpdaterAgent  = async (description,code) =>{
+    try {
+        const promptTemplate = ChatPromptTemplate.fromMessages([
+        ["system", react_app_updater_system_prompt],
+        ["human", "code : {code} \n new requirement  :   {description}"],
+        ]);
+        const chain = promptTemplate.pipe(model).pipe(parser);
+        const response = await chain.invoke({ code,description });
         return response;
     } catch (error) {
         console.error('Error processing request:', error);

@@ -59,7 +59,7 @@ function ChatBox() {
       alignItems: 'center',
       boxSizing: 'border-box'
     }}>
-      <h3 style={{ fontSize: '1.4em', color: '#fff', marginBottom: '10px' }}>Chat with Us</h3>
+      <h3 style={{ fontSize: '1.4em', color: '#fff', marginBottom: '10px' }}>What should I create</h3>
       <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <textarea
           placeholder="Enter your description here..."

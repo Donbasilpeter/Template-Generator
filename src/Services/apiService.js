@@ -1,6 +1,5 @@
-import { ReactAppAgent, ReactComponentAgent,ReactProjectAgent,ReactAppReviewerAgent } from "../LLM/agents";
 // import { react_developer_human_prompt } from "../LLM/prompts";
-import { processInput } from "./helper.js";
+import { codeFromScratch,codeUpdater } from "./helper.js";
 
 
 
@@ -20,13 +19,9 @@ import { processInput } from "./helper.js";
 export const submitDescription = async (description,template) => {
   try {
     let response = ""
-     response = await ReactProjectAgent( description)
-     console.log(JSON.parse(processInput(response)))
-     response = await ReactAppAgent(processInput(response))
-     response = await ReactAppReviewerAgent(description,processInput(response))
-     response = JSON.parse(processInput(response))
-     console.log(response)
-     return response
+    if(template=="") response = await codeFromScratch(description)
+    else response = await codeUpdater(description,template)
+    return response 
   } catch (error) {
     console.error('Error:', error);
     throw error;
