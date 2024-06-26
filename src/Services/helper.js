@@ -17,10 +17,11 @@ export const codeFromScratch =async (description)=>{
     response = JSON.parse(processInput(response))
     return response
   }
-export const codeUpdater =async (description,template)=>{
+export const codeUpdater =async (pastDescriptions,description,template)=>{
+    const  requirement = pastDescriptions.join('\n') + "\n " +  description
     let response = ""
     response = await ReactAppUpdaterAgent(description,JSON.stringify(template))
-    response = await ReactAppReviewerAgent(description,processInput(response))
+    response = await ReactAppReviewerAgent(requirement,processInput(response))
     response = JSON.parse(processInput(response))
     return response
   }

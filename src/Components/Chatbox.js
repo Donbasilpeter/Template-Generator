@@ -3,22 +3,25 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setTemplate, setIsLoading, clearTemplate } from '../reducers/templateSlice';
 import { submitDescription } from '../Services/apiService';
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
-import { setIsChatbox } from '../reducers/chatboxSlice';
+import { setIsChatbox,setDescription, clearDescription } from '../reducers/chatboxSlice';
 
 
 function ChatBox() {
-  const [description, setDescription] = useState('');
+  const [description, setCurrentDescription] = useState('');
   const dispatch = useDispatch();
   const template = useSelector((state) => state.template.code);
+  const pastDescriptions = useSelector((state) => state.chatbox.description);
+
 
   const handleChange = (event) => {
-    setDescription(event.target.value);
+    setCurrentDescription(event.target.value);
   };
 
   const handleSubmit = async () => {
     dispatch(setIsLoading(true));
     try {
-      const receivedTemplate = await submitDescription(description, template);
+      const receivedTemplate = await submitDescription(pastDescriptions,description, template);
+      dispatch(setDescription(description))
       if (receivedTemplate) {
         dispatch(setTemplate(receivedTemplate));
         window.electronAPI.saveFile(receivedTemplate);
@@ -46,6 +49,7 @@ function ChatBox() {
   const clearTemplateHandler = () => {
     dispatch(clearTemplate());
     dispatch(setIsChatbox(false));
+    dispatch(clearDescription())
     
   };
 

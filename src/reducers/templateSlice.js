@@ -16,7 +16,7 @@ export const templateSlice = createSlice({
         return state.code
     },
     clearTemplate: (state) => {
-        state.code = ''; // Clear the template code
+        state.code = ""; // Clear the template code
     },
     setIsLoading: (state, action) => {
         state.isLoading = action.payload
