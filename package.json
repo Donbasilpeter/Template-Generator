@@ -13,6 +13,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "dotenv": "^16.4.5",
+    "fs-extra": "^11.2.0",
     "langchain": "^0.2.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -23,14 +24,14 @@
     "sass": "^1.77.6",
     "web-vitals": "^2.1.4"
   },
-"scripts": {
-  "start": "set BROWSER=none&& react-scripts start",
-  "build": "react-scripts build",
-  "test": "react-scripts test",
-  "eject": "react-scripts eject",
-  "start-demo": "set BROWSER=none&& cd demo-app && npm start",
-  "electron": "concurrently \"npm:start\" \"npm run start-demo\" \"wait-on http://localhost:3000 http://localhost:3001 && electron .\""
-},
+  "scripts": {
+    "start": "set BROWSER=none&& react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "start-demo": "set BROWSER=none&& cd demo-app && npm start",
+    "electron": "concurrently \"npm:start\" \"npm run start-demo\" \"wait-on http://localhost:3000 http://localhost:3001 && electron .\""
+  },
   "eslintConfig": {
     "extends": [
       "react-app",

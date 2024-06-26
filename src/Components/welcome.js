@@ -63,7 +63,7 @@ function WelcomeTemplate() {
                 </div>
             </main>
             
-            <style jsx>{`
+            <style jsx="true">{`
                 @media (max-width: 768px) {
                     header h1 {
                         font-size: 2.5em;
