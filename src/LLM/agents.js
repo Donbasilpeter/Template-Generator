@@ -55,14 +55,14 @@ export  const  ReactProjectAgent  = async (description) =>{
     }
 }
 
-export  const  ReactAppAgent  = async (description) =>{
+export  const  ReactAppAgent  = async (description,structure) =>{
     try {
         const promptTemplate = ChatPromptTemplate.fromMessages([
         ["system", react_app_developer_system_prompt],
-        ["human", "{description}"],
+        ["human", "description :{description}\nstructure : {structure}"],
         ]);
         const chain = promptTemplate.pipe(model).pipe(parser);
-        const response = await chain.invoke({ description });
+        const response = await chain.invoke({ description,structure });
         return response;
     } catch (error) {
         console.error('Error processing request:', error);
