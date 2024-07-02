@@ -1,6 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs-extra');
+const { exec, execSync } = require('child_process');
 
 /**
  * Recursively creates files and folders based on a JSON structure.
@@ -29,6 +30,7 @@ function createStructure(basePath, structure) {
 
 const isDev = process.env.NODE_ENV === 'development';
 let mainWindow;
+let reactAppProcess;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -45,13 +47,53 @@ function createWindow() {
     isDev
       ? 'http://localhost:3000'
       : `file://${path.join(__dirname, '../build/index.html')}`
-  )
+  );
+
+  mainWindow.on('closed', () => {
+    mainWindow = null;
+  });
 }
 
-app.on('ready', createWindow);
+app.on('ready', () => {
+  // Start the React development server
+  const reactAppPath = path.join(app.getAppPath(), './demo-app');
+  exec('npm install', { cwd: reactAppPath }, (installError, installStdout, installStderr) => {
+    if (installError) {
+      console.error(`Error installing React app dependencies: ${installError}`);
+      return;
+    }
+    if (installStderr) {
+      console.error(`React app install stderr: ${installStderr}`);
+      return;
+    }
+    console.log(`React app install stdout: ${installStdout}`);
+
+    // Start the React app after installation
+    reactAppProcess = exec('npm run start', { cwd: reactAppPath }, (startError, startStdout, startStderr) => {
+      if (startError) {
+        console.error(`Error starting React app: ${startError}`);
+        return;
+      }
+      if (startStderr) {
+        console.error(`React app start stderr: ${startStderr}`);
+        return;
+      }
+      console.log(`React app start stdout: ${startStdout}`);
+    });
+  });
+
+  createWindow();
+});
+
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
+  }
+});
+
+app.on('will-quit', () => {
+  if (reactAppProcess) {
+    reactAppProcess.kill();
   }
 });
 
