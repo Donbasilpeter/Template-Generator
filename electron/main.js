@@ -27,6 +27,7 @@ function createStructure(basePath, structure) {
   }
 }
 
+const isDev = process.env.NODE_ENV === 'development';
 let mainWindow;
 
 function createWindow() {
