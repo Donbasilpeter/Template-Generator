@@ -40,7 +40,11 @@ function createWindow() {
     }
   });
 
-  mainWindow.loadURL('http://localhost:3000'); // Adjust the URL to your React app's location
+  mainWindow.loadURL(
+    isDev
+      ? 'http://localhost:3000'
+      : `file://${path.join(__dirname, '../build/index.html')}`
+  )
 }
 
 app.on('ready', createWindow);
