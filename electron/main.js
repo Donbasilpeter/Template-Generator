@@ -1,7 +1,12 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs-extra');
-const { exec, execSync } = require('child_process');
+const { exec } = require('child_process');
+const util = require('util');
+const execPromise = util.promisify(exec);
+const dotenv = require('dotenv');
+dotenv.config();
+const url = process.env.REACT_APP_APP_URL 
 
 /**
  * Recursively creates files and folders based on a JSON structure.
@@ -30,8 +35,6 @@ function createStructure(basePath, structure) {
 
 const isDev = process.env.NODE_ENV === 'development';
 let mainWindow;
-let reactAppProcess;
-
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 800,
@@ -45,7 +48,7 @@ function createWindow() {
 
   mainWindow.loadURL(
     isDev
-      ? 'http://localhost:3000'
+      ? url
       : `file://${path.join(__dirname, '../build/index.html')}`
   );
 
@@ -53,23 +56,12 @@ function createWindow() {
     mainWindow = null;
   });
 }
-
-app.on('ready', () => {
-  // Start the React development server
-  const reactAppPath = path.join(app.getAppPath(), './demo-app');
-  exec('npm install', { cwd: reactAppPath }, (installError, installStdout, installStderr) => {
-    if (installError) {
-      console.error(`Error installing React app dependencies: ${installError}`);
-      return;
-    }
-    if (installStderr) {
-      console.error(`React app install stderr: ${installStderr}`);
-      return;
-    }
-    console.log(`React app install stdout: ${installStdout}`);
-
+async function installDependencies(reactAppPath) {
+  try {
+    const installResult = await execPromise('npm install', { cwd: reactAppPath });
+    console.log(`React app install stdout: ${installResult.stdout}`);
     // Start the React app after installation
-    reactAppProcess = exec('npm run start', { cwd: reactAppPath }, (startError, startStdout, startStderr) => {
+    exec('npm run start', { cwd: reactAppPath }, (startError, startStdout, startStderr) => {
       if (startError) {
         console.error(`Error starting React app: ${startError}`);
         return;
@@ -80,9 +72,24 @@ app.on('ready', () => {
       }
       console.log(`React app start stdout: ${startStdout}`);
     });
-  });
+    if (installResult.stderr) {
+      console.error(`React app install stderr: ${installResult.stderr}`);
+    }
+  } catch (error) {
+    console.error(`Error installing React app dependencies: ${error}`);
+    throw error;
+  }
+}
 
-  createWindow();
+
+app.on('ready', () => {
+  const reactAppPath = path.join(__dirname, '../demo-app');
+  try {
+    installDependencies(reactAppPath);
+    createWindow();
+  } catch (error) {
+    console.error(`Error during app startup: ${error}`);
+  }
 });
 
 app.on('window-all-closed', () => {
@@ -91,14 +98,8 @@ app.on('window-all-closed', () => {
   }
 });
 
-app.on('will-quit', () => {
-  if (reactAppProcess) {
-    reactAppProcess.kill();
-  }
-});
-
 ipcMain.on('save-file', async (event, data) => {
-  const filePath = path.join(app.getAppPath(), './demo-app/src'); // Save file in the root directory
+  const filePath = path.join(__dirname, '../demo-app/src'); // Save file in the root directory
 
   try {
     // Remove the folder if it already exists

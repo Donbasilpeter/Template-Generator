@@ -35,7 +35,8 @@
     "start-demo": "set BROWSER=none&& cd demo-app && npm start",
     "electron:demo-app": "cross-env NODE_ENV=development concurrently \"npm:start\" \"npm run start-demo\" \"wait-on http://localhost:3000 http://localhost:3001 && electron .\"",
     "electron": "cross-env NODE_ENV=development concurrently \"npm:start\"  \"wait-on http://localhost:3000  && electron .\"",
-    "dist": "cross-env NODE_ENV=production npm run build && npm run obfuscate && electron-builder"
+    "dist": "cross-env NODE_ENV=production npm run build && npm run obfuscate && electron-builder",
+    "dist:no-obfuscate": "cross-env NODE_ENV=production npm run build && electron-builder"
   },
   "build": {
     "appId": "com.example.electron-react-app",

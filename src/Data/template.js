@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+const url = process.env.REACT_APP_DEMO_APP_URL
+
 
 function Template() {
   const [isAppAvailable, setIsAppAvailable] = useState(false);
@@ -19,7 +21,7 @@ function Template() {
   useEffect(() => {
     const checkAppAvailability = async () => {
       try {
-        const response = await fetch("http://localhost:3001");
+        const response = await fetch(url);
         if (response.ok) {
           setIsAppAvailable(true);
         } else {
@@ -37,7 +39,7 @@ function Template() {
     <div style={containerStyle}>
       {isAppAvailable ? (
         <iframe
-          src="http://localhost:3001"
+          src={url}
           title="Child React App"
           style={iframeStyle}
         />
