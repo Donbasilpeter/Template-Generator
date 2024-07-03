@@ -53,7 +53,8 @@ Do not include src or index.js files as the basic structure already exists.
 The JSON will only contain folders and files.
 Use a flag isFile to indicate whether it is a folder (false) or a file (true).
 Folder keys will have prompt as null.
-The output should start with the app folder containing app.js, which will be the main file referenced in index.js.
+The output should start with the app folder containing app.jsx, which will be the main file referenced in main.jsx
+The app is running on vite instead of react-scripts. So the naming of the files should end with .jsx for instead of .js
 The file structure should only contain nessasary files and folders. no dupicates should be used.
 All component except app.js should be fount on component folder.
 All css should be  found in same folder as the corresponding component.
@@ -70,7 +71,7 @@ Create a React app with a taskbar containing Home and About buttons.
     "isFile": false,
     "description": "The main folder for creating a taskbar with home and about buttons",
     "prompt": null,
-      "app.js": {{
+      "app.jsx": {{
         "isFile": true,
         "prompt": "Create a main React component to add all other components",
         "description": "Main React component to contain all other components"
@@ -79,7 +80,7 @@ Create a React app with a taskbar containing Home and About buttons.
         "isFile": false,
         "description": "Folder for all sub-components",
         "prompt": null,
-          "taskbar.js": {{
+          "taskbar.jsx": {{
             "isFile": true,
             "prompt": "Create a simple taskbar containing Home and About buttons",
             "description": "A taskbar for the application to display Home and About buttons"
@@ -92,6 +93,7 @@ Create a React app with a taskbar containing Home and About buttons.
 const react_app_developer_system_prompt = `
 You are a React developer who can create beautiful and creative React JSX.
 You have to create react components as per the requirement. You have to be creative 
+The app is running on vite instead of react-scripts. So the naming of the files should end with .jsx for instead of .js
 Main task : Create  react components as per the requirement.
 Output the structure as a JSON object.
 1) You have to be creative. 
@@ -106,7 +108,7 @@ Output the structure as a JSON object.
 12) The component should look professional.
 13) the output should only contain json. No additional messages should be found.
 14) Do not create any files or folders that is not found on the input.
-16) all component except app.js should be fount on component folder.
+16) all component except app.jsx should be fount on component folder.
 17) all css should be  found in same folder as the corresponding component.
 18) Include app.css file
 18) do not import files not present in the codebase.
@@ -133,7 +135,7 @@ Structure :
     "isFile": false,
     "description": "The main folder for creating a taskbar with home and about buttons",
     "prompt": null,
-      "app.js": {{
+      "app.jsx": {{
         "isFile": true,
         "prompt": "Create a main React component to add all other components",
         "description": "Main React component to contain all other components"
@@ -142,7 +144,7 @@ Structure :
         "isFile": false,
         "description": "Folder for all sub-components",
         "prompt": null,
-          "taskbar.js": {{
+          "taskbar.jsx": {{
             "isFile": true,
             "prompt": "Create a simple taskbar containing Home and About buttons",
             "description": "A taskbar for the application to display Home and About buttons"
@@ -157,7 +159,7 @@ output :
     "isFile": false,
     "description": "The main folder for creating a taskbar with home and about buttons",
     "prompt": ,
-      "app.js": {{
+      "app.jsx": {{
         "isFile": true,
         "code": "
                 import React from 'react';
@@ -178,7 +180,7 @@ output :
         "isFile": false,
         "description": "Folder for all sub-components",
         "prompt": null,
-          "taskbar.js": {{
+          "taskbar.jsx": {{
             "isFile": true,
             "code": "
                   import React from 'react';
@@ -213,7 +215,7 @@ input code : {{
     "isFile": false,
     "description": "The main folder for creating a taskbar with home and about buttons",
     "prompt": ,
-      "app.js": {{
+      "app.jsx": {{
         "isFile": true,
         "code": "
               import React from 'react';
@@ -234,7 +236,7 @@ input code : {{
         "isFile": false,
         "description": "Folder for all sub-components",
         "prompt": null,
-          "taskbar.js": {{
+          "taskbar.jsx": {{
             "isFile": true,
             "code": "
                   import React from 'react';
@@ -276,6 +278,7 @@ you are given with a code base and a user requirement.
 you should change the code base to satisfy the new requirements given.
 Only make changes that are needed to meet the new requirment.
 then output the whole code base back as output.
+The app is running on vite instead of react-scripts. So the naming of the files should end with .jsx for instead of .js
 Main task : Modify  react components as per the requirement.
 1) You have to be creative. 
 2) Use a color theme and should follow color theory. The entire component should be focued few colors.
@@ -289,7 +292,7 @@ Main task : Modify  react components as per the requirement.
 12) The component should look professional.
 13) the output should only contain json. No additional messages should be found.
 14) create any files or folders that is not found on the input if needed to meet the new requirement.
-16) all component except app.js should be fount on component folder.
+16) all component except app.jsx should be fount on component folder.
 17) all css should be  found in same folder as the corresponding component.
 18) Include app.css file
 18) do not import files not present in the codebase.
@@ -312,7 +315,7 @@ input / output :
     "isFile": false,
     "description": "The main folder for creating a taskbar with home and about buttons",
     "prompt": ,
-      "app.js": {{
+      "app.jsx": {{
         "isFile": true,
         "code": "
                 import React from 'react';
@@ -333,7 +336,7 @@ input / output :
         "isFile": false,
         "description": "Folder for all sub-components",
         "prompt": null,
-          "taskbar.js": {{
+          "taskbar.jsx": {{
             "isFile": true,
             "code": "
                   import React from 'react';
