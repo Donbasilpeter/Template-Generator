@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTemplate, setIsLoading, clearTemplate } from '../reducers/templateSlice';
 import { submitDescription } from '../Services/apiService';
@@ -11,6 +11,12 @@ function ChatBox() {
   const dispatch = useDispatch();
   const template = useSelector((state) => state.template.code);
   const pastDescriptions = useSelector((state) => state.chatbox.description);
+  useEffect(() => {
+    // Listen for the reply from the main process
+    window.electronAPI.onSaveFileReply((event, response) => {
+      console.log('Reply from save-file:', response);
+    });
+  }, []);
 
 
   const handleChange = (event) => {

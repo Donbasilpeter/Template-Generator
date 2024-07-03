@@ -8,11 +8,25 @@ const dotenv = require('dotenv');
 dotenv.config();
 const url = process.env.REACT_APP_APP_URL 
 
-/**
- * Recursively creates files and folders based on a JSON structure.
- * @param {string} basePath - The base path where the structure should be created.
- * @param {object} structure - The JSON structure defining files and folders.
- */
+function getAppPath() {
+  return app.isPackaged ? path.join(process.resourcesPath, 'demo-app') : path.join(__dirname, '../demo-app');
+}
+
+function getWritablePath() {
+  return path.join(app.getPath('userData'), 'demo-app');
+}
+
+async function extractApp() {
+  const appPath = getAppPath();
+  const writablePath = getWritablePath();
+
+  if (fs.existsSync(writablePath)) {
+    await fs.remove(writablePath);
+  }
+
+  await fs.copy(appPath, writablePath);
+}
+
 function createStructure(basePath, structure) {
   if (!fs.existsSync(basePath)) {
     fs.mkdirSync(basePath, { recursive: true });
@@ -35,6 +49,7 @@ function createStructure(basePath, structure) {
 
 const isDev = process.env.NODE_ENV === 'development';
 let mainWindow;
+
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 800,
@@ -56,6 +71,7 @@ function createWindow() {
     mainWindow = null;
   });
 }
+
 async function installDependencies(reactAppPath) {
   try {
     const installResult = await execPromise('npm install', { cwd: reactAppPath });
@@ -81,11 +97,11 @@ async function installDependencies(reactAppPath) {
   }
 }
 
-
-app.on('ready', () => {
-  const reactAppPath = path.join(__dirname, '../demo-app');
+app.on('ready', async () => {
+  const reactAppPath = getWritablePath();
   try {
-    installDependencies(reactAppPath);
+    await extractApp();
+    await installDependencies(reactAppPath);
     createWindow();
   } catch (error) {
     console.error(`Error during app startup: ${error}`);
@@ -99,11 +115,11 @@ app.on('window-all-closed', () => {
 });
 
 ipcMain.on('save-file', async (event, data) => {
-  const filePath = path.join(__dirname, '../demo-app/src'); // Save file in the root directory
+  const filePath = path.join(getWritablePath(), 'src'); // Save file in the writable directory
 
   try {
     // Remove the folder if it already exists
-    await fs.remove(path.join(filePath,'/app'));
+    await fs.remove(path.join(filePath, 'app'));
     console.log(`Deleted existing folder: ${filePath}`);
 
     // Call createStructure with the base path and the structure data
@@ -112,6 +128,6 @@ ipcMain.on('save-file', async (event, data) => {
     event.reply('save-file-reply', 'success');
   } catch (err) {
     console.error(`Error deleting folder: ${err}`);
-    event.reply('save-file-reply', 'failure');
+    event.reply('save-file-reply', `Error deleting folder: ${err}`);
   }
 });
