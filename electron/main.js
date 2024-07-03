@@ -6,25 +6,17 @@ const util = require('util');
 const execPromise = util.promisify(exec);
 const dotenv = require('dotenv');
 dotenv.config();
-const url = process.env.REACT_APP_APP_URL 
+const url = process.env.REACT_APP_APP_URL;
 
-function getAppPath() {
-  return app.isPackaged ? path.join(process.resourcesPath, 'demo-app') : path.join(__dirname, '../demo-app');
-}
-
-function getWritablePath() {
-  return path.join(app.getPath('userData'), 'demo-app');
-}
 
 async function extractApp() {
-  const appPath = getAppPath();
-  const writablePath = getWritablePath();
-
+  const appPath = path.join(__dirname, '../demo-app');
+  const writablePath = path.join(app.getPath('userData'), 'demo-app');
   if (fs.existsSync(writablePath)) {
     await fs.remove(writablePath);
   }
-
-  await fs.copy(appPath, writablePath);
+    await fs.copy(appPath, writablePath);
+  return writablePath
 }
 
 function createStructure(basePath, structure) {
@@ -98,9 +90,9 @@ async function installDependencies(reactAppPath) {
 }
 
 app.on('ready', async () => {
-  const reactAppPath = getWritablePath();
+
   try {
-    await extractApp();
+    const reactAppPath = await extractApp();
     await installDependencies(reactAppPath);
     createWindow();
   } catch (error) {
@@ -115,7 +107,7 @@ app.on('window-all-closed', () => {
 });
 
 ipcMain.on('save-file', async (event, data) => {
-  const filePath = path.join(getWritablePath(), 'src'); // Save file in the writable directory
+  const filePath = path.join(app.getPath('userData'), 'demo-app', 'src'); // Save file in the writable directory
 
   try {
     // Remove the folder if it already exists

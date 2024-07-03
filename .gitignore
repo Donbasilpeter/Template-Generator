@@ -5,7 +5,6 @@
 src/Data
 /.pnp
 .pnp.js
-demo-app/src/app
 .env
 
 
