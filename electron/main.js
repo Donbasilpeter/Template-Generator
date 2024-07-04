@@ -1,7 +1,8 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const dotenv = require('dotenv');
-const { extractApp, installDependencies } = require('./utils');
+const fs = require('fs-extra');
+const { extractApp, installDependencies, runBuild } = require('./utils');
 const { setupIpcHandlers } = require('./ipcHandlers');
 
 dotenv.config();
@@ -34,8 +35,16 @@ function createWindow() {
 
 app.on('ready', async () => {
   try {
-    const reactAppPath = await extractApp(app);
-    await installDependencies(reactAppPath);
+    const appUserDataPath = app.getPath('userData');
+    const setupFlagPath = path.join(appUserDataPath, 'setup.flag');
+    const reactAppPath = path.join(appUserDataPath, 'demo-app');
+
+    if (!fs.existsSync(setupFlagPath)) {
+      await extractApp(reactAppPath);
+      await installDependencies(reactAppPath);
+      fs.writeFileSync(setupFlagPath, ''); // Create a flag file after setup
+    }
+    runBuild(reactAppPath); // Always run the build script
     createWindow();
     setupIpcHandlers(app);
   } catch (error) {
