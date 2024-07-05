@@ -12,10 +12,7 @@ import {
 
 
 
-const openAIApiKey = process.env.REACT_APP_OPENAI_API_KEY
 
-// Initialize the OpenAI model
-const model = new ChatOpenAI({ model: "gpt-4o",openAIApiKey:openAIApiKey});
 // Create a parser to parse the output from the model
 const parser = new StringOutputParser();
 
@@ -23,13 +20,15 @@ const parser = new StringOutputParser();
 // simple react componet generation agent
 
 
-export  const  ReactComponentAgent  = async (description) =>{
+export  const  ReactComponentAgent  = async (description,openAIApiKey) =>{
     try {
         // Create a prompt template using predefined messages and placeholders
         const promptTemplate = ChatPromptTemplate.fromMessages([
         ["system", react_developer_system_prompt],
         ["human", "{description}"],
         ]);
+        const model = new ChatOpenAI({ model: "gpt-4o",openAIApiKey:openAIApiKey});
+
         const chain = promptTemplate.pipe(model).pipe(parser);
         const response = await chain.invoke({ description });
         return response;
@@ -40,12 +39,14 @@ export  const  ReactComponentAgent  = async (description) =>{
 }
 
 
-export  const  ReactProjectAgent  = async (description) =>{
+export  const  ReactProjectAgent  = async (description,openAIApiKey) =>{
     try {
         const promptTemplate = ChatPromptTemplate.fromMessages([
         ["system", project_manager_system_prompt],
         ["human", "{description}"],
         ]);
+        const model = new ChatOpenAI({ model: "gpt-4o",openAIApiKey:openAIApiKey});
+
         const chain = promptTemplate.pipe(model).pipe(parser);
         const response = await chain.invoke({ description });
         return response;
@@ -55,12 +56,14 @@ export  const  ReactProjectAgent  = async (description) =>{
     }
 }
 
-export  const  ReactAppAgent  = async (description,structure) =>{
+export  const  ReactAppAgent  = async (description,structure,openAIApiKey) =>{
     try {
         const promptTemplate = ChatPromptTemplate.fromMessages([
         ["system", react_app_developer_system_prompt],
         ["human", "description :{description}\nstructure : {structure}"],
         ]);
+        const model = new ChatOpenAI({ model: "gpt-4o",openAIApiKey:openAIApiKey});
+
         const chain = promptTemplate.pipe(model).pipe(parser);
         const response = await chain.invoke({ description,structure });
         return response;
@@ -70,12 +73,14 @@ export  const  ReactAppAgent  = async (description,structure) =>{
     }
 }
 
-export  const  ReactAppReviewerAgent  = async (description,code) =>{
+export  const  ReactAppReviewerAgent  = async (description,code,openAIApiKey) =>{
     try {
         const promptTemplate = ChatPromptTemplate.fromMessages([
         ["system", react_app_reviewer_system_prompt],
         ["human", "requirement :   {description} \n code : {code} "],
         ]);
+        const model = new ChatOpenAI({ model: "gpt-4o",openAIApiKey:openAIApiKey});
+
         const chain = promptTemplate.pipe(model).pipe(parser);
         const response = await chain.invoke({ description,code });
         return response;
@@ -85,12 +90,14 @@ export  const  ReactAppReviewerAgent  = async (description,code) =>{
     }
 }
 
-export  const  ReactAppUpdaterAgent  = async (description,code) =>{
+export  const  ReactAppUpdaterAgent  = async (description,code,openAIApiKey) =>{
     try {
         const promptTemplate = ChatPromptTemplate.fromMessages([
         ["system", react_app_updater_system_prompt],
         ["human", "code : {code} \n new requirement  :   {description}"],
         ]);
+        const model = new ChatOpenAI({ model: "gpt-4o",openAIApiKey:openAIApiKey});
+
         const chain = promptTemplate.pipe(model).pipe(parser);
         const response = await chain.invoke({ code,description });
         return response;
