@@ -18,7 +18,8 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'preload.js'),
+      devTools: false, // Disable dev tools
     }
   });
 
@@ -27,6 +28,7 @@ function createWindow() {
       ? url
       : `file://${path.join(__dirname, '../build/index.html')}`
   );
+  mainWindow.setMenu(null);
 
   mainWindow.on('closed', () => {
     mainWindow = null;
