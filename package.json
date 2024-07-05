@@ -54,7 +54,7 @@
       "target": "nsis"
     },
     "extraMetadata": {
-      "main": "electron/main.js"
+      "main": "electronBuild/main.js"
     }
   },
   "eslintConfig": {
