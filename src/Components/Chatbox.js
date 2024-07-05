@@ -11,6 +11,9 @@ function ChatBox() {
   const dispatch = useDispatch();
   const template = useSelector((state) => state.template.code);
   const pastDescriptions = useSelector((state) => state.chatbox.description);
+  const ApiKey = useSelector((state)=> state.apikey.apiKey)
+
+
 
 
   const handleChange = (event) => {
@@ -20,7 +23,7 @@ function ChatBox() {
   const handleSubmit = async () => {
     dispatch(setIsLoading(true));
     try {
-      const receivedTemplate = await submitDescription(pastDescriptions,description, template);
+      const receivedTemplate = await submitDescription(pastDescriptions,description, template,ApiKey);
       dispatch(setDescription(description))
       if (receivedTemplate) {
         dispatch(setTemplate(receivedTemplate));

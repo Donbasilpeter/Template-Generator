@@ -1,26 +1,29 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setIsChatbox } from '../reducers/chatboxSlice';
-import { setIsApiKey } from '../reducers/apiSlice'; 
+import { setIsApiKey,setApiKey } from '../reducers/apiSlice'; 
 
 export default function ApiKeyInput() {
-  const [apiKey, setApiKey] = useState('');
+  const [apiKey, setKey] = useState('');
   const [message, setMessage] = useState('');
   const dispatch = useDispatch();
 
 
   const handleInputChange = (e) => {
-    setApiKey(e.target.value);
+    setKey(e.target.value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = window.electronAPI.saveApiKey(apiKey)
-    if(res){
-    dispatch(setIsApiKey(true));
-    dispatch(setIsChatbox(true));
-    } else {
+    if(apiKey==='' ){
       setMessage('Please enter a valid API key.');
+    } else {
+      const res = await window.electronAPI.saveApiKey(apiKey)
+      if (res){
+        dispatch(setIsApiKey(true));
+        dispatch(setIsChatbox(true));
+        dispatch(setApiKey(apiKey));
+      }
     }
   };
 

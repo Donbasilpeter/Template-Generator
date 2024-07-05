@@ -31,6 +31,7 @@ function setupIpcHandlers(app) {
     try {
       if (await fs.pathExists(apiKeyFilePath)) {
         const apiKey = await fs.readFile(apiKeyFilePath, 'utf8');
+        if (apiKey =='') return false
         return apiKey;
       } else {
         return false;

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-    apiKey :"",
+    apiKey :'',
     isApiKey :true
 }
 
@@ -13,7 +13,7 @@ export const apiKeySlice = createSlice({
       state.isApiKey = action.payload
     },
     setApiKey: (state, action) => {
-        state.isApiKey = action.payload
+        state.apiKey = action.payload
       },
   },
 
