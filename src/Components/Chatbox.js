@@ -41,13 +41,23 @@ function ChatBox() {
     }
   };
 
-  const downloadJSFile = () => {
-    const element = document.createElement("a");
-    const file = new Blob([template], { type: 'text/javascript' });
-    element.href = URL.createObjectURL(file);
-    element.download = "template.js";
-    document.body.appendChild(element);
-    element.click();
+
+  const handleZipDownload = async () => {
+    try {
+      const buffer = await window.electronAPI.downloadDemoApp();
+      const blob = new Blob([buffer], { type: 'application/zip' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'demo-app.zip';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+
+    } catch (err) {
+      console.error('Failed to download zipped folder:', err);
+    }
   };
 
   const clearTemplateHandler = () => {
@@ -89,7 +99,7 @@ function ChatBox() {
         {template && (
           <div style={{ display: 'flex', alignItems: 'center', marginLeft: '10px' }}>
             <DownloadForOfflineIcon
-              onClick={downloadJSFile}
+              onClick={handleZipDownload}
               style={{
                 color: '#fff',
                 fontSize: '2em',

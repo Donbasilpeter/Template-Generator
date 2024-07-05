@@ -3,6 +3,61 @@ const fs = require('fs-extra');
 const { exec, spawn } = require('child_process');
 const util = require('util');
 const execPromise = util.promisify(exec);
+const archiver = require('archiver');
+const { PassThrough } = require('stream');
+
+/**
+ * Compresses a folder into a zip file and returns it as a buffer.
+ * @param {string} folderPath - The path to the folder to be compressed.
+ * @returns {Promise<Buffer>} - A promise that resolves with the compressed file as a buffer.
+ */
+function compressFolderToBuffer(folderPath) {
+  return new Promise((resolve, reject) => {
+      const archive = archiver('zip', {
+          zlib: { level: 9 } // Sets the compression level.
+      });
+
+      const buffers = [];
+      const passthrough = new PassThrough();
+
+      passthrough.on('data', (chunk) => buffers.push(chunk));
+      passthrough.on('end', () => resolve(Buffer.concat(buffers)));
+      passthrough.on('error', (err) => reject(err));
+
+      archive.on('warning', (err) => {
+          if (err.code === 'ENOENT') {
+              console.warn('Archiver warning:', err);
+          } else {
+              reject(err);
+          }
+      });
+
+      archive.on('error', (err) => reject(err));
+
+      archive.pipe(passthrough);
+
+      archive.glob('**/*', {
+          cwd: folderPath,
+          ignore: ['node_modules/**']
+      });
+
+      archive.finalize();
+  });
+}
+
+// Usage example:
+const folderToCompress = 'your-folder-path'; // Replace with your folder path
+
+compressFolderToBuffer(folderToCompress)
+    .then((buffer) => {
+        console.log('Folder compressed successfully');
+        // Do something with the buffer, e.g., save to a file later
+        // fs.writeFileSync('output.zip', buffer);
+    })
+    .catch((error) => {
+        console.error(`Error compressing folder: ${error}`);
+    });
+
 
 async function extractApp(reactAppPath) {
   const appPath = path.join(__dirname, '../demo-app');
@@ -67,5 +122,6 @@ module.exports = {
   extractApp,
   installDependencies,
   runBuild,
-  createStructure
+  createStructure,
+  compressFolderToBuffer
 };

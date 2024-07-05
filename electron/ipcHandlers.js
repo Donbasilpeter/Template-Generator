@@ -1,7 +1,7 @@
 const { ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs-extra');
-const { createStructure } = require('./utils');
+const { createStructure,compressFolderToBuffer } = require('./utils');
 
 
 function setupIpcHandlers(app) {
@@ -51,6 +51,15 @@ function setupIpcHandlers(app) {
     } catch (error) {
       console.error(`Error saving API key: ${error}`);
       return false;
+    }
+  });
+  ipcMain.handle('zip-folder', async () => {
+    try {
+      const folderPath = path.join(app.getPath('userData'), 'demo-app'); // Save file in the writable directory
+      const buffer = await compressFolderToBuffer(folderPath);
+      return buffer
+    } catch (err) {
+      throw new Error('Failed to zip folder: ' + err.message);
     }
   });
 }
