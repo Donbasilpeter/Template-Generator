@@ -3,7 +3,9 @@ const path = require('path');
 const fs = require('fs-extra');
 const { createStructure } = require('./utils');
 
+
 function setupIpcHandlers(app) {
+
   ipcMain.handle('save-file', async (event, data) => {
     const filePath = path.join(app.getPath('userData'), 'demo-app', 'src'); // Save file in the writable directory
 
@@ -19,6 +21,35 @@ function setupIpcHandlers(app) {
     } catch (err) {
       console.error(`Error deleting folder: ${err}`);
       return  `Error deleting folder: ${err}`;
+    }
+  });
+
+
+  ipcMain.handle('check-api-key', async () => {
+    const apiKeyFilePath = path.join(app.getPath('userData'), 'apiKey.txt');
+
+    try {
+      if (await fs.pathExists(apiKeyFilePath)) {
+        const apiKey = await fs.readFile(apiKeyFilePath, 'utf8');
+        return apiKey;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error(`Error checking API key: ${error}`);
+      return null;
+    }
+  });
+
+  ipcMain.handle('save-api-key', async (event, apiKey) => {
+    const apiKeyFilePath = path.join(app.getPath('userData'), 'apiKey.txt');
+  
+    try {
+      await fs.outputFile(apiKeyFilePath, apiKey, 'utf8');
+      return true;
+    } catch (error) {
+      console.error(`Error saving API key: ${error}`);
+      return false;
     }
   });
 }

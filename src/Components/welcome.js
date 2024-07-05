@@ -1,12 +1,22 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { setIsChatbox } from '../reducers/chatboxSlice';
+import { setIsApiKey,setApiKey } from '../reducers/apiSlice'; 
+
 
 function WelcomeTemplate() {
     const dispatch = useDispatch();
 
-    const toggleChatbox = () => {
-        dispatch(setIsChatbox(true));
+    const onGetStarted = async () => {
+        let apiKey = await window.electronAPI.checkApiKey()
+        console.log(apiKey)
+        if(apiKey===false) dispatch(setIsApiKey(false))
+        else{
+            dispatch(setIsApiKey(true))
+            dispatch(setApiKey(apiKey))
+            dispatch(setIsChatbox(true))
+        }
+        
     };
 
     return (
@@ -56,7 +66,7 @@ function WelcomeTemplate() {
                         }}
                         onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#3b6978'}
                         onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#4ca1af'}
-                        onClick={toggleChatbox}
+                        onClick={onGetStarted}
                     >
                         Get Started
                     </button>
