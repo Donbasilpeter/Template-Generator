@@ -256,6 +256,8 @@ input code : {{
 }}
 
 your task is to modify and create an optimized code that meets all the requirements.
+Use latest react features like react routes v6 whenever needed.
+look for any depreciated or old imports and modify with latest.
 look for possible bugs and fix them.
 make the app more professional and creative.
 add files only if nessasary.

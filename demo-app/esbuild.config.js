@@ -12,6 +12,10 @@ async function build() {
 
     await ctx.rebuild();
     await ctx.watch();
+    await ctx.serve({
+        servedir: 'dist',
+        port: 3001,
+    });
 }
 
 build().catch((err) => {

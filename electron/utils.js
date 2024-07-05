@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs-extra');
-const { exec } = require('child_process');
+const { exec,spawn } = require('child_process');
 const util = require('util');
 const execPromise = util.promisify(exec);
 
@@ -19,20 +19,11 @@ async function installDependencies(reactAppPath) {
     const installResult = await execPromise('npm install', { cwd: reactAppPath });
     console.log(`React app install stdout: ${installResult.stdout}`);
     // Start the React app after installation
-    exec('npm run start', { cwd: reactAppPath }, (startError, startStdout, startStderr) => {
-      if (startError) {
-        console.error(`Error starting React app: ${startError}`);
-        return;
-      }
-      if (startStderr) {
-        console.error(`React app start stderr: ${startStderr}`);
-        return;
-      }
-      console.log(`React app start stdout: ${startStdout}`);
-    });
     if (installResult.stderr) {
       console.error(`React app install stderr: ${installResult.stderr}`);
     }
+    // Start the React app after installation
+    spawn('node', ['esbuild.config.js'], { cwd: reactAppPath });
   } catch (error) {
     console.error(`Error installing React app dependencies: ${error}`);
     throw error;
