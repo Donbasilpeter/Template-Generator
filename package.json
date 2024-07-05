@@ -75,7 +75,7 @@
       "last 1 safari version"
     ]
   },
-  "author": "Don Basil Peter",
+  "author": "Don Basil Peter <donbasilpeter@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "concurrently": "^8.2.2",
