@@ -4,7 +4,7 @@ const fs = require('fs-extra');
 const { createStructure } = require('./utils');
 
 function setupIpcHandlers(app) {
-  ipcMain.on('save-file', async (event, data) => {
+  ipcMain.handle('save-file', async (event, data) => {
     const filePath = path.join(app.getPath('userData'), 'demo-app', 'src'); // Save file in the writable directory
 
     try {
@@ -13,12 +13,12 @@ function setupIpcHandlers(app) {
       console.log(`Deleted existing folder: ${filePath}`);
 
       // Call createStructure with the base path and the structure data
-      createStructure(filePath, data);
+      await createStructure(filePath, data);
 
-      event.reply('save-file-reply', 'success');
+      return 'sucess'
     } catch (err) {
       console.error(`Error deleting folder: ${err}`);
-      event.reply('save-file-reply', `Error deleting folder: ${err}`);
+      return  `Error deleting folder: ${err}`;
     }
   });
 }

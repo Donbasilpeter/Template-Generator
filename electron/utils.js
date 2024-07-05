@@ -43,7 +43,7 @@ async function installDependencies(reactAppPath) {
   }
 }
 
-function createStructure(basePath, structure) {
+async function createStructure(basePath, structure) {
   if (!fs.existsSync(basePath)) {
     fs.mkdirSync(basePath, { recursive: true });
   }
