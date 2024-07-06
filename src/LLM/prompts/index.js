@@ -2,7 +2,6 @@ export {
 react_developer_system_prompt,
 project_manager_system_prompt,
 react_app_developer_system_prompt,
-react_app_reviewer_system_prompt,
 react_app_updater_system_prompt,
 
 } from './systemPrompts.js';
