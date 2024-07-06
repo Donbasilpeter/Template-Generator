@@ -98,10 +98,6 @@ async function installDependencies(reactAppPath) {
 }
 
 async function createStructure(basePath, structure) {
-  if (structure?.app?.npmPackage) {
-    const installResult = await execPromise(structure?.app?.npmPackage, { cwd: path.join(basePath, '../') });
-    console.log(`React app install stdout: ${installResult.stdout}`);
-  }
   if (!fs.existsSync(basePath)) {
     fs.mkdirSync(basePath, { recursive: true });
   }
@@ -125,5 +121,6 @@ module.exports = {
   installDependencies,
   runBuild,
   createStructure,
-  compressFolderToBuffer
+  compressFolderToBuffer,
+  execPromise
 };

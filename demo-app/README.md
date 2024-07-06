@@ -20,7 +20,3 @@ To start the demo app, follow the steps below:
     node esbuild.config.js
     ```
 
-## Project Structure
-
-The project structure is as follows:
-

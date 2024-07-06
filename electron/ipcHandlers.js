@@ -1,7 +1,7 @@
 const { ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs-extra');
-const { createStructure,compressFolderToBuffer } = require('./utils');
+const { createStructure,compressFolderToBuffer,execPromise } = require('./utils');
 
 
 function setupIpcHandlers(app) {
@@ -10,10 +10,13 @@ function setupIpcHandlers(app) {
     const filePath = path.join(app.getPath('userData'), 'demo-app', 'src'); // Save file in the writable directory
 
     try {
+      if (data?.app?.npmPackage) {
+        const installResult = await execPromise(data?.app?.npmPackage, { cwd: path.join(filePath, '../') });
+        console.log(`React app install stdout: ${installResult.stdout}`);
+      }
       // Remove the folder if it already exists
       await fs.remove(path.join(filePath, 'app'));
-      console.log(`Deleted existing folder: ${filePath}`);
-
+      console.log(`Deleted existing folder: ${filePath}/app`);
       // Call createStructure with the base path and the structure data
       await createStructure(filePath, data);
 
