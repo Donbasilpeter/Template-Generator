@@ -5,16 +5,14 @@ import { setIsApiKey, setApiKey } from '../reducers/apiSlice';
 
 function WelcomeTemplate() {
     const dispatch = useDispatch();
-    const isApiKey = useSelector((state)=> state.apikey.isApiKey)
-
+    const isApiKey = useSelector((state) => state.apikey.isApiKey);
 
     const onGetStarted = async () => {
         let apiKey = await window.electronAPI.checkApiKey();
-        if (apiKey === false){
+        if (apiKey === false) {
             dispatch(setIsApiKey(false));
             dispatch(setIsChatbox(false));
-        }
-        else {
+        } else {
             dispatch(setIsApiKey(true));
             dispatch(setApiKey(apiKey));
             dispatch(setIsChatbox(true));
@@ -30,15 +28,14 @@ function WelcomeTemplate() {
     return (
         <div style={{ fontFamily: '"Roboto", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif', color: '#ddd', padding: '0 20px', background: 'linear-gradient(135deg, #2c3e50 0%, #4ca1af 100%)', minHeight: '100vh', display: 'flex', flexDirection: 'column', boxSizing: 'border-box' }}>
             <header style={{ textAlign: 'center', padding: '20px 0', boxSizing: 'border-box' }}>
-                <h1 style={{ fontSize: '3em', color: '#fff', letterSpacing: '1.5px' }}>Template Generator</h1>
-                <p style={{ fontSize: '1.2em', color: '#ccc' }}>Streamlining React Component Development</p>
+                <h1 style={{ fontSize: '3em', color: '#fff', letterSpacing: '1.5px' }}>Web Developer</h1>
+                <p style={{ fontSize: '1.2em', color: '#ccc' }}>Creating Web Apps with Ease</p>
             </header>
 
             <main style={{ maxWidth: '800px', width: '100%', margin: '20px auto', backgroundColor: '#333', borderRadius: '15px', padding: '40px', boxShadow: '0 5px 15px rgba(0,0,0,0.3)', flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', boxSizing: 'border-box' }}>
-                <h2 style={{ fontSize: '2em', color: '#fff', textAlign: 'center', marginBottom: '20px', fontWeight: 'bold' }}>Introducing Template Generator</h2>
+                <h2 style={{ fontSize: '2em', color: '#fff', textAlign: 'center', marginBottom: '20px', fontWeight: 'bold' }}>Introducing Web Developer</h2>
                 <p style={{ fontSize: '1.1em', lineHeight: '1.6', textAlign: 'justify', color: '#ccc' }}>
-                    Template Generator is a LLM-based application that streamlines your React component development process like never before!
-                    With Template Generator, you can now transform a simple text prompt into a fully-fledged React component template in just a matter of seconds!
+                    Web Developer is a desktop application that creates a web app as per requirements. The application is developed using LangChain, Electron, React, and OpenAI. This repository contains an executable file that can be used to install the Web Developer application.
                 </p>
 
                 <section style={{ marginTop: '40px' }}>
@@ -46,15 +43,32 @@ function WelcomeTemplate() {
                     <ul style={{ listStyleType: 'none', paddingLeft: '0', boxSizing: 'border-box' }}>
                         <li style={{ fontSize: '1.2em', margin: '10px 0', display: 'flex', alignItems: 'center' }}>
                             <span style={{ backgroundColor: '#4ca1af', borderRadius: '50%', width: '25px', height: '25px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: '#fff', marginRight: '10px' }}>1️⃣</span>
-                            <span>Effortless Template Creation: Simply input your component's specifications, and let Template Generator do the heavy lifting for you.</span>
+                            <span>Effortless Web App Creation: Simply input your app requirements, and let Web Developer do the heavy lifting for you.</span>
                         </li>
                         <li style={{ fontSize: '1.2em', margin: '10px 0', display: 'flex', alignItems: 'center' }}>
                             <span style={{ backgroundColor: '#4ca1af', borderRadius: '50%', width: '25px', height: '25px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: '#fff', marginRight: '10px' }}>2️⃣</span>
-                            <span>Instant Download: Generate your components and download them instantly for use in your projects.</span>
+                            <span>Download and Save: Once generated, download and save your app directly to your system.</span>
+                        </li>
+                    </ul>
+                </section>
+
+                <section style={{ marginTop: '40px' }}>
+                    <h3 style={{ fontSize: '1.5em', color: '#fff', marginTop: '20px', fontWeight: 'bold' }}>📋 Prerequisites:</h3>
+                    <p style={{ fontSize: '1.1em', lineHeight: '1.6', textAlign: 'justify', color: '#ccc' }}>
+                        You need an OpenAI API key to run the application. If you don't have one, you can sign up at OpenAI.
+                    </p>
+                </section>
+
+                <section style={{ marginTop: '40px' }}>
+                    <h3 style={{ fontSize: '1.5em', color: '#fff', marginTop: '20px', fontWeight: 'bold' }}>🙏 Acknowledgments:</h3>
+                    <ul style={{ listStyleType: 'none', paddingLeft: '0', boxSizing: 'border-box' }}>
+                        <li style={{ fontSize: '1.2em', margin: '10px 0', display: 'flex', alignItems: 'center' }}>
+                            <span style={{ backgroundColor: '#4ca1af', borderRadius: '50%', width: '25px', height: '25px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: '#fff', marginRight: '10px' }}>✅</span>
+                            <span>Utilizes OpenAI API for generating web content</span>
                         </li>
                         <li style={{ fontSize: '1.2em', margin: '10px 0', display: 'flex', alignItems: 'center' }}>
-                            <span style={{ backgroundColor: '#4ca1af', borderRadius: '50%', width: '25px', height: '25px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: '#fff', marginRight: '10px' }}>3️⃣</span>
-                            <span>Customizable Templates: Tailor the templates to fit your specific needs and project requirements effortlessly.</span>
+                            <span style={{ backgroundColor: '#4ca1af', borderRadius: '50%', width: '25px', height: '25px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: '#fff', marginRight: '10px' }}>✅</span>
+                            <span>Built with LangChain, Electron, and React for seamless performance and modern UI</span>
                         </li>
                     </ul>
                 </section>
@@ -101,7 +115,7 @@ function WelcomeTemplate() {
                     )}
                 </div>
             </main>
-            
+
             <style jsx="true">{`
                 @media (max-width: 768px) {
                     header h1 {
