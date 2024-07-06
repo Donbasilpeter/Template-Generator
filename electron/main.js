@@ -40,9 +40,10 @@ app.on('ready', async () => {
     const appUserDataPath = app.getPath('userData');
     const setupFlagPath = path.join(appUserDataPath, 'setup.flag');
     const reactAppPath = path.join(appUserDataPath, 'demo-app');
+    const appPath = path.join(__dirname, '../demo-app');
 
     if (!fs.existsSync(setupFlagPath)) {
-      await extractApp(reactAppPath);
+      await extractApp(reactAppPath,appPath);
       await installDependencies(reactAppPath);
       fs.writeFileSync(setupFlagPath, ''); // Create a flag file after setup
     }
@@ -54,8 +55,12 @@ app.on('ready', async () => {
   }
 });
 
-app.on('window-all-closed', () => {
+app.on('window-all-closed', async () => {
   if (process.platform !== 'darwin') {
+    const appUserDataPath = app.getPath('userData');
+    const reactAppPath = path.join(appUserDataPath, 'demo-app', 'src','app');
+    const appPath = path.join(__dirname, '../demo-app', 'src','app');
+    await extractApp(reactAppPath,appPath);
     app.quit();
   }
 });

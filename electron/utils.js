@@ -59,8 +59,7 @@ compressFolderToBuffer(folderToCompress)
     });
 
 
-async function extractApp(reactAppPath) {
-  const appPath = path.join(__dirname, '../demo-app');
+async function extractApp(reactAppPath,appPath) {
   if (fs.existsSync(reactAppPath)) {
     await fs.remove(reactAppPath);
   }
@@ -99,12 +98,15 @@ async function installDependencies(reactAppPath) {
 }
 
 async function createStructure(basePath, structure) {
+  if (structure?.app?.npmPackage) {
+    const installResult = await execPromise(structure?.app?.npmPackage, { cwd: path.join(basePath, '../') });
+    console.log(`React app install stdout: ${installResult.stdout}`);
+  }
   if (!fs.existsSync(basePath)) {
     fs.mkdirSync(basePath, { recursive: true });
   }
-
   for (const key in structure) {
-    if (structure.hasOwnProperty(key) && key !== 'isFile' && key !== 'description' && key !== 'prompt') {
+    if (structure.hasOwnProperty(key) && key !== 'isFile' && key !== 'description' && key !== 'npmPackage') {
       const item = structure[key];
       const itemPath = path.join(basePath, key);
 
