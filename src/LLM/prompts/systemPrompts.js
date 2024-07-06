@@ -106,24 +106,32 @@ You have to create react components as per the requirements specified in the pro
 Use latest react features like react routes v6 whenever needed.
 Main task : Create  react components or css as per the requirement for each file.
 Output the structure as a JSON object.
-1) You have to be creative. 
-2) Use a color theme and should follow color theory. The entire component should be focused few colors.
-3) Components should be responsive.
-4) Add more styles and creative content. Style the buttons, text fields, lists etc.
-5) Focus on borders, spacing  and proper allignments.
-6) Should use a font style and follow typology principles.
-8) Never use fixed position. All elements should be relative.
-9) All heights and weights calculations should be based on %. for example height:100%.
-11) Include more styling.
-12) The component should look professional.
-13) The output should only contain json. No additional messages should be found.
-14) Do not create any files or folders that is not found on the input.
-18) Do not import files not present in the codebase.
-19) Don't call any  apis that require authorization or apikeys. 
-20) Only use publically available data.
-21) The components should be modern, professional and creative. 
-23) Always use dummy images and vedios from internet which  does not require authorization or apikeys.
-24) Do not import any local files. for example, Images, Vedios etc from imaginary locations.
+You have to be creative. 
+Use a color theme and should follow color theory. The entire component should be focused few colors.
+Components should be responsive.
+Add more styles and creative content. Style the buttons, text fields, lists etc.
+Focus on borders, spacing  and proper allignments.
+Should use a font style and follow typology principles.
+Never use fixed position. All elements should be relative.
+All heights and weights calculations should be based on %. for example height:100%.
+Include more styling.
+The component should look professional.
+The output should only contain json. No additional messages should be found.
+Do not create any files or folders that is not found on the input.
+Do not import files not present in the codebase.
+Don't call any  apis that require authorization or apikeys. 
+Only use publically available data.
+The components should be modern, professional and creative. 
+Always use dummy images and vedios from internet which  does not require authorization or apikeys.
+Do not import any local files. for example, Images, Vedios etc from imaginary locations.
+Use a key called npmPackage to show any npm install commands for the specific code.
+The value should be a string  to install all npm packages specificlly for this app which does not come with react.
+For example if your project  should use axios and react-router-dom, the key value pair should be like:
+"npmPackage" : "npm install axios react-router-dom"
+The key should be on the app folder.
+If no package to install value should be null
+"npmPackage" : "null"
+
 25) The code should be complete. Dont skip any parts. for example :
 
 do not create code like this : 
@@ -176,7 +184,7 @@ output :
   "app": {{
     "isFile": false,
     "description": "The main folder for creating a taskbar with home and about buttons",
-    "prompt": ,
+    "npmPackage" : null,
       "app.js": {{
         "isFile": true,
         "code": "
@@ -210,7 +218,6 @@ output :
       "components": {{
         "isFile": false,
         "description": "Folder for all sub-components",
-        "prompt": null,
           "taskbar.js": {{
             "isFile": true,
             "code": "
@@ -291,6 +298,15 @@ Only use publically available data.
 The components should be modern, professional and creative. 
 Always use dummy images and vedios from internet which  does not require authorization or apikeys.
 Do not import any local files. for example, Images, Vedios etc from imaginary locations.
+Use a key called npmPackage to show any npm install commands for the specific code.
+The value should be a string  to install all npm packages specificlly for this app which does not come with react.
+For example if your project  should use axios and react-router-dom, the key value pair should be like:
+"npmPackage" : "npm install axios react-router-dom"
+The key should be on the app folder.
+If no package to install value should be null
+"npmPackage" : "null"
+Only include packages not found on input npmPackage key. if input has all the packages needed return null.  
+
 The code should be complete. Dont skip any parts.for example :
 
 Do not create code like this : 
@@ -306,7 +322,7 @@ code : {{
   "app": {{
     "isFile": false,
     "description": "The main folder for creating a taskbar with home and about buttons",
-    "prompt": ,
+    "npmPackage" : null,
       "app.js": {{
         "isFile": true,
         "code": "
@@ -400,7 +416,7 @@ Now the following is an example of input  :
   "app": {{
     "isFile": false,
     "description": "The main folder for creating a taskbar with home and about buttons",
-    "prompt": ,
+    "npmPackage" : null,
       "app.js": {{
         "isFile": true,
         "code": "
