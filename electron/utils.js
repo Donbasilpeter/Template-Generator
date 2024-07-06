@@ -59,8 +59,7 @@ compressFolderToBuffer(folderToCompress)
     });
 
 
-async function extractApp(reactAppPath) {
-  const appPath = path.join(__dirname, '../demo-app');
+async function extractApp(reactAppPath,appPath) {
   if (fs.existsSync(reactAppPath)) {
     await fs.remove(reactAppPath);
   }

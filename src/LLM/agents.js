@@ -1,5 +1,5 @@
 import { ChatOpenAI } from "@langchain/openai";
-import { StringOutputParser } from "@langchain/core/output_parsers";
+import { JsonOutputParser,StringOutputParser } from "@langchain/core/output_parsers";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 import {
      react_developer_system_prompt,
@@ -13,7 +13,9 @@ import {
 
 
 // Create a parser to parse the output from the model
-const parser = new StringOutputParser();
+const jsonparser = new JsonOutputParser();
+const stringparser = new StringOutputParser();
+
 
 
 // simple react componet generation agent
@@ -28,7 +30,7 @@ export  const  ReactComponentAgent  = async (description,openAIApiKey) =>{
         ]);
         const model = new ChatOpenAI({ model: "gpt-4o",openAIApiKey:openAIApiKey});
 
-        const chain = promptTemplate.pipe(model).pipe(parser);
+        const chain = promptTemplate.pipe(model).pipe(stringparser);
         const response = await chain.invoke({ description });
         return response;
     } catch (error) {
@@ -44,9 +46,15 @@ export  const  ReactProjectAgent  = async (description,openAIApiKey) =>{
         ["system", project_manager_system_prompt],
         ["human", "{description}"],
         ]);
-        const model = new ChatOpenAI({ model: "gpt-4o",openAIApiKey:openAIApiKey});
-
-        const chain = promptTemplate.pipe(model).pipe(parser);
+        const model = new ChatOpenAI({ 
+            model: "gpt-4o",
+            temperature: 0.5,
+            openAIApiKey:openAIApiKey,
+            modelKwargs: {
+                response_format: { type: "json_object" },
+            },
+        });
+        const chain = promptTemplate.pipe(model).pipe(jsonparser);
         const response = await chain.invoke({ description });
         return response;
     } catch (error) {
@@ -61,9 +69,13 @@ export  const  ReactAppAgent  = async (description,structure,openAIApiKey) =>{
         ["system", react_app_developer_system_prompt],
         ["human", "description :{description}\nstructure : {structure}"],
         ]);
-        const model = new ChatOpenAI({ model: "gpt-4o",openAIApiKey:openAIApiKey});
+        const model = new ChatOpenAI({ 
+            model: "gpt-4o",
+            temperature: 0.5,
+            openAIApiKey:openAIApiKey,
+        });
 
-        const chain = promptTemplate.pipe(model).pipe(parser);
+        const chain = promptTemplate.pipe(model).pipe(stringparser);
         const response = await chain.invoke({ description,structure });
         return response;
     } catch (error) {
@@ -78,9 +90,13 @@ export  const  ReactAppUpdaterAgent  = async (description,code,openAIApiKey) =>{
         ["system", react_app_updater_system_prompt],
         ["human", "code : {code} \n{description}"],
         ]);
-        const model = new ChatOpenAI({ model: "gpt-4o",openAIApiKey:openAIApiKey});
+        const model = new ChatOpenAI({ 
+            model: "gpt-4o",
+            openAIApiKey:openAIApiKey,
+            temperature: 0.5,
+        });
 
-        const chain = promptTemplate.pipe(model).pipe(parser);
+        const chain = promptTemplate.pipe(model).pipe(stringparser);
         const response = await chain.invoke({ code,description });
         return response;
     } catch (error) {
