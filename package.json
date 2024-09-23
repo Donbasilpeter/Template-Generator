@@ -1,0 +1,90 @@
+{
+  "name": "web-developer",
+  "description": "A web developer application that can develop a React web app from a given prompt",
+  "version": "0.1.0",
+  "main": "electronBuild/main.js",
+  "homepage": "./",
+  "private": true,
+  "dependencies": {
+    "@electron/asar": "^3.2.10",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/icons-material": "^5.15.20",
+    "@mui/material": "^5.15.20",
+    "@reduxjs/toolkit": "^2.2.5",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "archiver": "^7.0.1",
+    "dotenv": "^16.4.5",
+    "fs-extra": "^11.2.0",
+    "langchain": "^0.2.6",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-icons": "^5.2.1",
+    "react-jsx-parser": "^1.29.0",
+    "react-redux": "^9.1.2",
+    "react-scripts": "5.0.1",
+    "sass": "^1.77.6",
+    "stream": "^0.0.3",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "set BROWSER=none&& react-scripts start",
+    "build": "cross-env GENERATE_SOURCEMAP=false react-scripts build",
+    "build:debug": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "obfuscate:electron": "javascript-obfuscator electron --output electronBuild --config obfuscator-config.json",
+    "obfuscate": "javascript-obfuscator build --output build --config obfuscator-config.json",
+    "start-demo": "set BROWSER=none&& cd demo-app && npm start",
+    "electron": "npm run obfuscate:electron && cross-env NODE_ENV=development concurrently \"npm:start\"  \"wait-on http://localhost:3000  && electron .\"",
+    "dist": "npm run obfuscate:electron && cross-env NODE_ENV=production npm run build && npm run obfuscate && electron-builder",
+    "dist:debug": "npm run obfuscate:electron && cross-env NODE_ENV=production npm run build:debug && electron-builder"
+  },
+  "build": {
+    "appId": "com.example.electron-react-app",
+    "files": [
+      "build/**/*",
+      "electronBuild/**/*",
+      "demo-app/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "extraMetadata": {
+      "main": "electronBuild/main.js"
+    }
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "author": "Don Basil Peter <donbasilpeter@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3",
+    "electron": "^31.0.2",
+    "electron-builder": "^24.13.3",
+    "javascript-obfuscator": "^4.1.1",
+    "wait-on": "^7.2.0"
+  }
+}

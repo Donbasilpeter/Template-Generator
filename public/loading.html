@@ -1,0 +1,52 @@
+<!-- public/loading.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Loading...</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #282c34;
+      color: #61dafb;
+    }
+    #loader {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .spinner {
+      margin: 16px;
+      width: 64px;
+      height: 64px;
+      border: 8px solid #61dafb;
+      border-top: 8px solid transparent;
+      border-radius: 50%;
+      animation: spin 2s linear infinite;
+    }
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    #text {
+      margin-top: 20px;
+      font-size: 24px;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+  </style>
+</head>
+<body>
+  <div id="loader">
+    <div class="spinner"></div>
+    <div id="text">Loading...</div>
+  </div>
+</body>
+</html>
