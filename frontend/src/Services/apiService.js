@@ -5,7 +5,7 @@ const BASE_URL = 'http://localhost:8000';
 
 export const submitDescription = async (description) => {
   try {
-    const response = await axios.post(`${BASE_URL}`, { description,sessionId:"1243"}, {
+    const response = await axios.post(`${BASE_URL}/chat`, { description,sessionId:"1243"}, {
       headers: {
         'Content-Type': 'application/json',
       },
