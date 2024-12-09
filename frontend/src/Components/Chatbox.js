@@ -1,16 +1,19 @@
 // ChatBox.js
 import React, { useState } from 'react';
 import { TextField, Box, InputAdornment } from '@mui/material';
-import { submitDescription } from '../Services/apiService'; 
+import { generateComponent } from '../Services/apiService'; 
 import { useDispatch,useSelector } from 'react-redux'
 import { setTemplate,setIsLoading } from '../reducers/templateSlice';
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
+import {  toast } from 'react-toastify';
+
 
 
 function ChatBox() {
   const [description, setDescription] = useState('');
   const dispatch = useDispatch()
   const template = useSelector((state) => state.template.code);
+  const user = useSelector((state) => state.auth.user);
 
   const handleChange = (event) => {
     setDescription(event.target.value);
@@ -18,13 +21,20 @@ function ChatBox() {
 
   const handleSubmit = async () => {
     try {
-      console.log("Submitted description:", description);
       dispatch(setIsLoading(true))
-      await submitDescription(description).then((template)=>{
-        if(template) dispatch(setTemplate(template))
+      await generateComponent(description,user.token).then((template)=>{
+        if(template.status===200) {
+          dispatch(setTemplate(template.res))
+          toast.success("Component Successfully Created")
+        }
+        else{
+      toast.error(template.message)
+        }
         dispatch(setIsLoading(false))
       });
     } catch (error) {
+      toast.error(error)
+        dispatch(setIsLoading(false))
     }
   };
 
