@@ -7,7 +7,7 @@ export const generateComponent = async (description,token) => {
     const response = await axios.get(
       `${BASE_URL}/chat`, 
       {
-        params: { description, sessionId: "1243" }, // Use 'params' for query parameters
+        params: { description, sessionId: "1233333" }, // Use 'params' for query parameters
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`, // Add Bearer token to headers

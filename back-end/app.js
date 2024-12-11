@@ -10,10 +10,7 @@ import authRoutes from './routes/authRoutes.js';
 const app = express();
 const port = 8000;
 
-// Connect to MongoDB Atlas
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('Connected to MongoDB Atlas'))
-  .catch((err) => console.log('Error connecting to MongoDB:', err));
+
 
 app.use(corsMiddleware); // CORS middleware
 app.use(bodyParser.json()); // Parse JSON requests
