@@ -2,20 +2,20 @@ import axios from 'axios';
 
 const BASE_URL = 'http://localhost:8000';
 
-export const generateComponent = async (description,token) => {
+export const generateComponent = async (description,token,sessionId) => {
   try {
     const response = await axios.get(
       `${BASE_URL}/chat`, 
       {
-        params: { description, sessionId: "1233333" }, // Use 'params' for query parameters
+        params: { description, sessionId }, // Use 'params' for query parameters
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`, // Add Bearer token to headers
         },
       }
     );
-    return { status: 200, res: response.data.result };
+    return { status: 200, res: response.data };
   } catch (error) {
-    return { status: 400, message: error?.response?.data?.message };
+    return { status: 400, message: error?.response?.data?.error };
   }
 };

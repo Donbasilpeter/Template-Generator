@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { TextField, Box, InputAdornment } from '@mui/material';
 import { generateComponent } from '../Services/apiService'; 
 import { useDispatch,useSelector } from 'react-redux'
-import { setTemplate,setIsLoading } from '../reducers/templateSlice';
+import { setTemplate,setIsLoading,setSessionId } from '../reducers/templateSlice';
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import {  toast } from 'react-toastify';
 
@@ -14,6 +14,8 @@ function ChatBox() {
   const dispatch = useDispatch()
   const template = useSelector((state) => state.template.code);
   const user = useSelector((state) => state.auth.user);
+  const sessionId = useSelector((state) => state.template.sessionId);
+
 
   const handleChange = (event) => {
     setDescription(event.target.value);
@@ -22,12 +24,17 @@ function ChatBox() {
   const handleSubmit = async () => {
     try {
       dispatch(setIsLoading(true))
-      await generateComponent(description,user.token).then((template)=>{
+      await generateComponent(description,user.token,sessionId).then((template)=>{
         if(template.status===200) {
-          dispatch(setTemplate(template.res))
+          dispatch(setTemplate(template.res.result))
+          dispatch(setSessionId(template.res.sessionId))
+
           toast.success("Component Successfully Created")
+
         }
         else{
+      console.log(template)
+
       toast.error(template.message)
         }
         dispatch(setIsLoading(false))
