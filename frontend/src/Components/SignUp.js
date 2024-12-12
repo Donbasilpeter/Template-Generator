@@ -180,7 +180,7 @@ const CreateAccount = () => {
                             fullWidth
                             sx={{
                                 mt: 2,
-                                backgroundColor: '#34312D', // Matching theme color for button
+                                backgroundColor: '#AF5D63', // Matching theme color for button
                                 color: '#fff',
                                 '&:hover': {
                                     backgroundColor: '#2A2A24', // Darker shade on hover

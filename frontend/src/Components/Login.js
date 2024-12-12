@@ -133,7 +133,7 @@ const Login = () => {
                             fullWidth
                             sx={{
                                 mt: 2,
-                                backgroundColor: '#34312D',
+                                backgroundColor: '#AF5D63',
                                 color: '#fff',
                                 '&:hover': {
                                     backgroundColor: '#2A2A24',
@@ -155,7 +155,7 @@ const Login = () => {
                     >
                         <Typography>
                             Don't have an account?{' '}
-                            <Link to="/create" style={{ color: '#34312D', fontWeight: 'bold' }}>
+                            <Link to="/create" style={{ color: '#AF5D63', fontWeight: 'bold' }}>
                                 Sign up
                             </Link>
                         </Typography>

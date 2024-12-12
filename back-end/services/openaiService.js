@@ -11,7 +11,7 @@ export const getChatResponseFromService = async (sessionId, description,userId) 
   try {
 
     if(!sessionId){
-      sessionId = String((await UserSession.create({userId}))._id)
+      sessionId = String((await UserSession.create({userId,name:description}))._id)
 
     } 
     const memory = new BufferMemory({
@@ -23,7 +23,7 @@ export const getChatResponseFromService = async (sessionId, description,userId) 
 
     const model = new ChatOpenAI({
       model: 'gpt-4o',
-      temperature: 0,
+      temperature: 0.7,
     });
 
 

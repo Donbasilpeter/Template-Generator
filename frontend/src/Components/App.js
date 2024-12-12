@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute'; // New PublicRoute component
-import ScreenDivider from './ScreenDivider';
+import Home from './Home';
 import Login from './Login';
 import CreateAccount from './SignUp';
 import NotFound from './NotFound'; // New NotFound component
@@ -34,7 +34,7 @@ const App = () => {
 
         {/* Protected routes */}
         <Route path="/*" element={<PrivateRoute />}>
-          <Route index element={<ScreenDivider />} />
+          <Route index element={<Home />} />
         <Route path="*" element={<NotFound />} />
         </Route>
 

@@ -1,7 +1,7 @@
 // ChatBox.js
 import React, { useState } from 'react';
 import { TextField, Box, InputAdornment } from '@mui/material';
-import { generateComponent } from '../Services/apiService'; 
+import { generateComponent } from '../Services/componentService'; 
 import { useDispatch,useSelector } from 'react-redux'
 import { setTemplate,setIsLoading,setSessionId } from '../reducers/templateSlice';
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
@@ -26,6 +26,7 @@ function ChatBox() {
       dispatch(setIsLoading(true))
       await generateComponent(description,user.token,sessionId).then((template)=>{
         if(template.status===200) {
+          console.log(template)
           dispatch(setTemplate(template.res.result))
           dispatch(setSessionId(template.res.sessionId))
 
