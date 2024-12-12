@@ -1,25 +1,41 @@
-import { ChatOpenAI } from "@langchain/openai";
-import { StringOutputParser } from "@langchain/core/output_parsers";
-import { ChatPromptTemplate } from "@langchain/core/prompts";
-import { react_developer_system_prompt } from "../prompts/index.js";
-import { getMessageHistory } from "../models/messageHistory.js";
-import { RunnableWithMessageHistory } from "@langchain/core/runnables";
+import { ChatOpenAI } from '@langchain/openai';
+import { BufferMemory } from 'langchain/memory';
+import { MongoDBChatMessageHistory } from '@langchain/mongodb';
+import { ChatPromptTemplate } from '@langchain/core/prompts';
+import { react_developer_system_prompt } from '../prompts/index.js';
+import db from '../database/db.js'
+import UserSession from '../models/UserSession.js';
+import { CustomConversationChain } from '../utils/chainWithMemoryandPromt.js';
 
-const promptTemplate = ChatPromptTemplate.fromMessages([
-  ["system", react_developer_system_prompt],
-  ["placeholder", "{chat_history}"],
-  ["human", "{description}"],
-]);
+export const getChatResponseFromService = async (sessionId, description,userId) => {
+  try {
 
-const parser = new StringOutputParser();
+    if(!sessionId){
+      sessionId = String((await UserSession.create({userId,name:description}))._id)
 
-const model = new ChatOpenAI({ model: "gpt-4o" });
+    } 
+    const memory = new BufferMemory({
+      chatHistory: new MongoDBChatMessageHistory({
+        collection: db.collection("ChatMemory"),
+        sessionId
+      }),
+    });
 
-const chain = promptTemplate.pipe(model).pipe(parser);
+    const model = new ChatOpenAI({
+      model: 'gpt-4o',
+      temperature: 0.7,
+    });
 
-export const withMessageHistory = new RunnableWithMessageHistory({
-  runnable: chain,
-  getMessageHistory,
-  inputMessagesKey: "description",
-  historyMessagesKey: "chat_history",
-});
+
+    const chain = new CustomConversationChain({ llm: model, memory,systemMessage:react_developer_system_prompt });
+
+
+    // Generate response
+    const response = await chain.invoke({ input:description });
+
+    return {res : response?.response, sessionId: sessionId};
+  } catch (error) {
+    console.error('Error in chat service:', error);
+    throw new Error('Error processing chat response.');
+  }
+};

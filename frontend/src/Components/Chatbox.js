@@ -1,16 +1,21 @@
 // ChatBox.js
 import React, { useState } from 'react';
 import { TextField, Box, InputAdornment } from '@mui/material';
-import { submitDescription } from '../Services/apiService'; 
+import { generateComponent } from '../Services/componentService'; 
 import { useDispatch,useSelector } from 'react-redux'
-import { setTemplate,setIsLoading } from '../reducers/templateSlice';
+import { setTemplate,setIsLoading,setSessionId } from '../reducers/templateSlice';
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
+import {  toast } from 'react-toastify';
+
 
 
 function ChatBox() {
   const [description, setDescription] = useState('');
   const dispatch = useDispatch()
   const template = useSelector((state) => state.template.code);
+  const user = useSelector((state) => state.auth.user);
+  const sessionId = useSelector((state) => state.template.sessionId);
+
 
   const handleChange = (event) => {
     setDescription(event.target.value);
@@ -18,13 +23,26 @@ function ChatBox() {
 
   const handleSubmit = async () => {
     try {
-      console.log("Submitted description:", description);
       dispatch(setIsLoading(true))
-      await submitDescription(description).then((template)=>{
-        if(template) dispatch(setTemplate(template))
+      await generateComponent(description,user.token,sessionId).then((template)=>{
+        if(template.status===200) {
+          console.log(template)
+          dispatch(setTemplate(template.res.result))
+          dispatch(setSessionId(template.res.sessionId))
+
+          toast.success("Component Successfully Created")
+
+        }
+        else{
+      console.log(template)
+
+      toast.error(template.message)
+        }
         dispatch(setIsLoading(false))
       });
     } catch (error) {
+      toast.error(error)
+        dispatch(setIsLoading(false))
     }
   };
 

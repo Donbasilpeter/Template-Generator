@@ -1,28 +1,47 @@
 import React from 'react';
-import Template from './template.js';
-import ChatBox from './Chatbox.js';
-import WelcomeTemplate from './welcome.js';
-import { useSelector } from 'react-redux';
-import Loading from './loading.js';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute'; // New PublicRoute component
+import Home from './Home';
+import Login from './Login';
+import CreateAccount from './SignUp';
+import NotFound from './NotFound'; // New NotFound component
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-
-const ScreenDivider = () => {
-  const template = useSelector((state) => state.template.code);
-  const isLoading = useSelector((state) => state.template.isLoading);
-
-
+const App = () => {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', backgroundColor:"#F3F3F4"}}>
-      <div style={{ flex: 8,overflow:"auto"}}>
-        {
-          isLoading?<Loading/> : (template ? <Template />:<WelcomeTemplate/>)
-        }
-        </div>
-      <div style={{ flex: 2 }}>
-        <ChatBox />
-      </div>
-    </div>
+    <Router>
+      <ToastContainer />
+      <Routes>
+        {/* Public routes */}
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/create"
+          element={
+            <PublicRoute>
+              <CreateAccount />
+            </PublicRoute>
+          }
+        />
+
+        {/* Protected routes */}
+        <Route path="/*" element={<PrivateRoute />}>
+          <Route index element={<Home />} />
+        <Route path="*" element={<NotFound />} />
+        </Route>
+
+
+      </Routes>
+    </Router>
   );
 };
 
-export default ScreenDivider;
+export default App;
