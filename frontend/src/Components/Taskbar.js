@@ -42,7 +42,7 @@ function TaskBar() {
           fontSize: '20px',
         }}
       >
-        Task Manager
+      Web Developer  
       </Typography>
 
       {/* Center: Navigation Links */}

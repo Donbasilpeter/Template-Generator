@@ -11,7 +11,7 @@ export const getChatResponseFromService = async (sessionId, description,userId) 
   try {
 
     if(!sessionId){
-      sessionId = String((await UserSession.create({userId,name:description}))._id)
+      sessionId = String((await UserSession.create({userId,name:description.substring(0,25)}))._id)
 
     } 
     const memory = new BufferMemory({

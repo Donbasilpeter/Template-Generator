@@ -5,7 +5,8 @@ import UserSession from "../models/UserSession.js";
 
 export const checkSessionOwnership = async (req, res, next) => {
   try {
-    const { sessionId } = req.query;
+    const sessionId = req.query?.sessionId || req.params?.sessionId;
+
     const userId = req.user.id
 
     // Ensure both sessionId and userId are provided
