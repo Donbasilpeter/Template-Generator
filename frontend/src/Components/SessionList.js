@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getAllSessions, deleteSession,getSessionById } from '../Services/sessionService';
+import { getAllSessions, deleteSession,getSessionById,updateSessionName } from '../Services/sessionService';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSession } from '../reducers/sessionSlice';
 import { Box, TextField, IconButton, List, ListItem, ListItemText, Typography, Grid, Divider } from '@mui/material';
@@ -43,18 +43,31 @@ const SessionList = () => {
   };
 
   const handleSave = () => {
-    // updateSession(editingSession, { name: editedName })
-    //   .then(() => {
-    //     dispatch(setSession(sessions.map(session =>
-    //       session._id === editingSession ? { ...session, name: editedName } : session
-    //     )));
-    //     setEditingSession(null);
-    //     setEditedName('');
-    //   })
-    //   .catch((err) => {
-    //     console.error('Error updating session:', err);
-    //   });
+    if (!editedName.trim()) {
+      toast.error("Session name cannot be empty");
+      return;
+    }
+    // Call the updateSessionName service
+    updateSessionName(editingSession, editedName, user)
+      .then(() => {
+        toast.success("Session name updated successfully");
+        setEditingSession(null);
+        setEditedName('');
+  
+        // Refresh the session list
+        getAllSessions(user)
+          .then((res) => {
+            dispatch(setSession(res.res));
+          })
+          .catch(() => {
+            toast.error("Error fetching updated sessions");
+          });
+      })
+      .catch(() => {
+        toast.error("Error updating session name");
+      });
   };
+  
 
   const handleDiscard = () => {
     setEditingSession(null);
