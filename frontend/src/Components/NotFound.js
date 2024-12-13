@@ -20,7 +20,7 @@ const NotFound = () => {
         sx={{
           fontSize: '5rem',
           fontWeight: 'bold',
-          color: '#34312D', // Use the same primary color
+          color: '#AF5D63', // New color for the 404 text
           mb: 2,
         }}
       >
@@ -29,7 +29,7 @@ const NotFound = () => {
       <Typography
         variant="h6"
         sx={{
-          color: '#34312D',
+          color: '#AF5D63', // New color for the error message text
           textAlign: 'center',
           mb: 4,
         }}
@@ -42,7 +42,7 @@ const NotFound = () => {
         variant="contained"
         sx={{
           textTransform: 'none',
-          backgroundColor: '#34312D',
+          backgroundColor: '#AF5D63',
           color: '#ffffff',
           '&:hover': {
             backgroundColor: '#5a544d',

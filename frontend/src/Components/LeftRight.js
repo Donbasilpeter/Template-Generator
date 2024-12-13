@@ -4,11 +4,15 @@ import React from 'react';
 import { Box } from '@mui/material';
 import ChatAndCode from './ChatAndCode.js';
 import SessionList from './SessionList.js';
+import TaskBar from './Taskbar.js';
+
 
 
 const LeftRight = () => {
   return (
-<Box
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh'}}>
+    <TaskBar/>
+    <Box
 display="flex"
 width="100%"
 height="100%"
@@ -36,6 +40,8 @@ sx={{
 <ChatAndCode/>
 </Box>
 </Box>
+  </div>
+
   );
 };
 

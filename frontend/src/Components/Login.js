@@ -5,8 +5,11 @@ import { Box, Button, TextField, Typography, Card, CardContent } from '@mui/mate
 import { loginApi } from '../Services/authService';
 import { Link } from 'react-router-dom';
 import {  toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+
 
 const Login = () => {
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [emailError, setEmailError] = useState('');
@@ -42,6 +45,7 @@ const Login = () => {
                 if (res.status===200) {
                     const user = { email, token:res.token };
                     dispatch(login(user));
+                    navigate("/create")
                     toast.success("Successfully Logged In")
                 }
                 else{

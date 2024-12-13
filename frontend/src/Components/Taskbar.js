@@ -42,7 +42,7 @@ function TaskBar() {
           fontSize: '20px',
         }}
       >
-      Web Developer  
+      Web Design Generator
       </Typography>
 
       {/* Center: Navigation Links */}
@@ -60,7 +60,7 @@ function TaskBar() {
               borderRadius: '8px',
             },
           }}
-          onClick={() => handleNavigation('/home')}
+          onClick={() => handleNavigation('/')}
         >
           Home
         </Button>
