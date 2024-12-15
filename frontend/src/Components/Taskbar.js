@@ -8,9 +8,6 @@ import { useNavigate } from 'react-router-dom';
 function TaskBar() {
   const navigate = useNavigate();
 
-  const handleNavigation = (path) => {
-    navigate(path); // Navigate to the desired route
-  };
 
 
   const dispatch = useDispatch();
@@ -45,61 +42,7 @@ function TaskBar() {
       Web Design Generator
       </Typography>
 
-      {/* Center: Navigation Links */}
-      <Box sx={{ display: 'flex', gap: '20px' }}>
-        <Button
-          variant="text"
-          sx={{
-            color: '#34312D',
-            fontSize: '16px',
-            fontWeight: 500,
-            padding: '8px 16px',
-            textTransform: 'none',
-            '&:hover': {
-              backgroundColor: '#f0f0f0',
-              borderRadius: '8px',
-            },
-          }}
-          onClick={() => handleNavigation('/')}
-        >
-          Home
-        </Button>
-        <Button
-          variant="text"
-          sx={{
-            color: '#34312D',
-            fontSize: '16px',
-            fontWeight: 500,
-            padding: '8px 16px',
-            textTransform: 'none',
-            '&:hover': {
-              backgroundColor: '#f0f0f0',
-              borderRadius: '8px',
-            },
-          }}
-          onClick={() => handleNavigation('/contact')}
-        >
-          Contact
-        </Button>
-        <Button
-          variant="text"
-          sx={{
-            color: '#34312D',
-            fontSize: '16px',
-            fontWeight: 500,
-            padding: '8px 16px',
-            textTransform: 'none',
-            '&:hover': {
-              backgroundColor: '#f0f0f0',
-              borderRadius: '8px',
-            },
-          }}
-          onClick={() => handleNavigation('/about')}
-        >
-          About
-        </Button>
-      </Box>
-      <Button
+           <Button
         variant="contained"
         color="secondary"
         onClick={handleLogout}

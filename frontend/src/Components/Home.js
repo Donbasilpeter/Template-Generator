@@ -1,5 +1,4 @@
 import React from 'react';
-import TaskBar from './Taskbar.js';
 import { Box, Typography, Button } from '@mui/material';
 
 const Home = () => {

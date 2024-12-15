@@ -145,11 +145,11 @@ const SessionList = () => {
           Create New Session
         </Button>
       </Box>
-
+           
+      <div style={{ height: '80%'}}>
       {sessions.length > 0 ? (
         <List
           sx={{
-            height: '80%',
             overflow: 'auto',
             flex: 10,
             paddingLeft: 4,
@@ -293,7 +293,9 @@ const SessionList = () => {
           No sessions available
         </Typography>
       )}
+      </div>
     </Box>
+    
   );
 };
 
