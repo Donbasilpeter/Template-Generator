@@ -1,0 +1,51 @@
+name: CI/CD Pipeline
+
+on:
+  pull_request:
+    branches:
+      - production  # Trigger the workflow on PR to production branch
+  push:
+    branches:
+      - production  # Trigger the workflow when changes are pushed to the production branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the code
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Set up Docker Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      # Cache Docker layers
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      # Build frontend and backend Docker images
+      - name: Build frontend Docker image
+        run: docker-compose -f docker-compose.yml build frontend
+
+      - name: Build backend Docker image
+        run: docker-compose -f docker-compose.yml build backend
+
+      # Push Docker images to a registry (if using Docker Hub, GitHub Container Registry, etc.)
+      - name: Push Docker images
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker-compose -f docker-compose.yml push frontend
+          docker-compose -f docker-compose.yml push backend
+
+      # # Deploy to production (e.g., AWS ECS, DigitalOcean, etc.)
+      # - name: Deploy to Production
+      #   run: |
+      #     # Replace with your deployment command, e.g., AWS CLI or Docker Swarm
+      #     echo "Deploying to production environment"

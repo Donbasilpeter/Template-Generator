@@ -1,0 +1,35 @@
+version: '3.9'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"  # Use port 80 for production
+    environment:
+      - REACT_APP_BASE_URL=${{ secrets.REACT_APP_BASE_URL }}
+    depends_on:
+      - backend  # Ensures backend is started before frontend
+    stdin_open: false  # Disable stdin in production
+    tty: false  # Disable tty in production
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGODB_URI=${{ secrets.MONGODB_URI }}  
+      - JWT_SECRET=${{ secrets.JWT_SECRET }}  
+      - OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}  
+      - CORS_ORIGIN=${{ secrets.CORS_ORIGIN }}  
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
