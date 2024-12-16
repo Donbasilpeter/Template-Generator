@@ -76,6 +76,7 @@ jobs:
       - name: Deploy to Elastic Beanstalk
         run: |
           # Use the existing Elastic Beanstalk environment
+          eb init
           eb use Template-Generator-dev   
           eb deploy
 
