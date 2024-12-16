@@ -6,7 +6,7 @@ services:
     ports:
       - "80:80"  # Use port 80 for production
     environment:
-      - REACT_APP_BASE_URL=$$REACT_APP_BASE_URL  # Escape $ for GitHub Actions secrets
+      - REACT_APP_BASE_URL=${REACT_APP_BASE_URL}
     depends_on:
       - backend  # Ensures backend is started before frontend
     stdin_open: false  # Disable stdin in production
@@ -21,10 +21,10 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - MONGODB_URI=$$MONGODB_URI  # Escape $ for GitHub Actions secrets
-      - JWT_SECRET=$$JWT_SECRET  # Escape $ for GitHub Actions secrets
-      - OPENAI_API_KEY=$$OPENAI_API_KEY  # Escape $ for GitHub Actions secrets
-      - CORS_ORIGIN=$$CORS_ORIGIN  # Escape $ for GitHub Actions secrets
+      - MONGODB_URI=${MONGODB_URI}
+      - JWT_SECRET=${JWT_SECRET}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - CORS_ORIGIN=${CORS_ORIGIN}
     networks:
       - app-network
 
