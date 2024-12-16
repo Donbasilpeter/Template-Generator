@@ -51,36 +51,33 @@ jobs:
   #         docker-compose -f docker-compose.yml push backend
   deploy:
     runs-on: ubuntu-latest
-    # needs: build  # This job depends on the build job
+    needs: build  # This job depends on the build job
 
     steps:
-      # Checkout the code
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - name: Get Timestamp
+        uses: gerred/actions/current-time@master
+        id: current-time
 
-      # Set up AWS CLI
-      - name: Set up AWS CLI
-        uses: aws-actions/configure-aws-credentials@v1
+      - name: Run String Replace
+        uses: frabert/replace-string-action@master
+        id: format-time
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          pattern: '[:\.]+'
+          string: "${{ steps.current-time.outputs.time }}"
+          replace-with: '-'
+          flags: 'g'
 
-      - name: Install EB CLI
-        run: |
-          sudo apt-get update
-          sudo apt-get install python3-pip
-          pip3 install awsebcli
+      - name: Generate Deployment Package
+        run: zip -r deploy.zip * -x "**node_modules**"
 
-      # Deploy Docker images to Elastic Beanstalk environment
-      - name: Deploy to Elastic Beanstalk
-        run: |
-          # Use the existing Elastic Beanstalk environment
-          eb init
-          eb use Template-Generator-dev   
-          eb deploy
-
-      # Optionally, check the status after deployment
-      - name: Check deployment status
-        run: eb status
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v16
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: Template-Generator
+          environment_name: Template-Generator-dev 
+          version_label: "docker-app-${{ steps.format-time.outputs.replaced }}"
+          region: us-west-2
+          deployment_package: deploy.zip
 
