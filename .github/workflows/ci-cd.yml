@@ -54,6 +54,10 @@ jobs:
     # needs: build  # This job depends on the build job
 
     steps:
+          # Checkout the code
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
       - name: Get Timestamp
         uses: gerred/actions/current-time@master
         id: current-time
@@ -67,8 +71,8 @@ jobs:
           replace-with: '-'
           flags: 'g'
 
-      - name: Generate Deployment Package
-        run: zip -r deploy.zip . 
+      - name: Generate deployment package
+        run: zip -r deploy.zip . -x '*.git*'
 
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v16
