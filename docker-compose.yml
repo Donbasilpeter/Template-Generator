@@ -3,6 +3,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+    image: donbasilpeter/frontend:latest
     ports:
       - "80:80"  # Use port 80 for production
     environment:
@@ -18,6 +19,7 @@ services:
     build:
       context: ./back-end
       dockerfile: Dockerfile
+    image: donbasilpeter/backend:latest
     ports:
       - "8000:8000"
     environment:
