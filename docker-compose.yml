@@ -23,10 +23,10 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - MONGODB_URI=${{ secrets.MONGODB_URI }}  
-      - JWT_SECRET=${{ secrets.JWT_SECRET }}  
-      - OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}  
-      - CORS_ORIGIN=${{ secrets.CORS_ORIGIN }}  
+      - MONGODB_URI=$$MONGODB_URI  # Escape $ for GitHub Actions secrets
+      - JWT_SECRET=$$JWT_SECRET  # Escape $ for GitHub Actions secrets
+      - OPENAI_API_KEY=$$OPENAI_API_KEY  # Escape $ for GitHub Actions secrets
+      - CORS_ORIGIN=$$CORS_ORIGIN  # Escape $ for GitHub Actions secrets
     networks:
       - app-network
 
