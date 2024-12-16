@@ -8,7 +8,7 @@ services:
     ports:
       - "80:80"  # Use port 80 for production
     environment:
-      - REACT_APP_BASE_URL=${{ secrets.REACT_APP_BASE_URL }}
+      - REACT_APP_BASE_URL=$$REACT_APP_BASE_URL  # Escape $ for GitHub Actions secrets
     depends_on:
       - backend  # Ensures backend is started before frontend
     stdin_open: false  # Disable stdin in production
