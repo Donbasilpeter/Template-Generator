@@ -51,7 +51,7 @@ jobs:
   #         docker-compose -f docker-compose.yml push backend
   deploy:
     runs-on: ubuntu-latest
-    needs: build  # This job depends on the build job
+    # needs: build  # This job depends on the build job
 
     steps:
       - name: Get Timestamp
