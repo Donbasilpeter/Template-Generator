@@ -1,4 +1,6 @@
 branch-defaults:
+  production:
+    environment: Template-Generator-test
   session:
     environment: Template-Generator-dev
     group_suffix: null
