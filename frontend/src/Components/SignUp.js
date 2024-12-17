@@ -5,6 +5,8 @@ import { Box, Button, TextField, Typography, Card, CardContent } from '@mui/mate
 import { createAccountApi,loginApi } from '../Services/authService'; // Assume you have an API function for creating accounts
 import { login } from '../reducers/authSlice';
 import {  toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+
 
 
 const CreateAccount = () => {
@@ -15,8 +17,11 @@ const CreateAccount = () => {
     const [passwordError, setPasswordError] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
 
     const handleCreateAccount = (e) => {
+        
         e.preventDefault();
         let isValid = true;
 
@@ -59,6 +64,7 @@ const CreateAccount = () => {
                         if (res.status===200) {
                             const user = { email, token:res.token };
                             dispatch(login(user));
+                            navigate("/session")
                             toast.success("Successfully Logged In")
                         }
                         else{

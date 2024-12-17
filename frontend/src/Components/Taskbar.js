@@ -2,13 +2,9 @@ import React from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { logout } from '../reducers/authSlice'; // Import your logout action
-import { useNavigate } from 'react-router-dom';
 
 
 function TaskBar() {
-  const navigate = useNavigate();
-
-
 
   const dispatch = useDispatch();
 

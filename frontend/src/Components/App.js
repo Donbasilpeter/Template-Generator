@@ -36,7 +36,7 @@ const App = () => {
         />
 
         {/* Protected routes */}
-        <Route path="/create*" element={<PrivateRoute />}>
+        <Route path="/session*" element={<PrivateRoute />}>
           <Route index element={<LeftRight />} />
         </Route>
         <Route path="*" element={<NotFound />} />

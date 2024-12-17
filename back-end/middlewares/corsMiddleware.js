@@ -1,5 +1,7 @@
 import cors from 'cors';
 
-export const corsMiddleware = cors({
-  origin:  process.env.CORS_ORIGIN, // Replace with the allowed origin
-});
+export const createCorsMiddleware = (allowedOrigin) => {
+  return cors({
+    origin: allowedOrigin, // Use the passed allowed origin
+  });
+};

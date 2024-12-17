@@ -45,7 +45,7 @@ const Login = () => {
                 if (res.status===200) {
                     const user = { email, token:res.token };
                     dispatch(login(user));
-                    navigate("/create")
+                    navigate("/session")
                     toast.success("Successfully Logged In")
                 }
                 else{
