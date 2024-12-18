@@ -15,7 +15,24 @@ env:
   CORS_ORIGIN: ${{ secrets.CORS_ORIGIN }}
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+
+      - name: Build Frontend Docker Image
+        working-directory: ./frontend
+        run: |
+          docker build -t donbasilpeter/frontend:latest .
+
+      - name: Build Backend Docker Image
+        working-directory: ./backend
+        run: |
+          docker build -t donbasilpeter/backend:latest .
+
   deploy-backend:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code
@@ -37,6 +54,7 @@ jobs:
           deployment_package: backend-deploy.zip
 
   deploy-frontend:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code
