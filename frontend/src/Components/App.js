@@ -7,7 +7,7 @@ import CreateAccount from './SignUp';
 import NotFound from './NotFound';
 import { ToastContainer } from 'react-toastify';
 import Home from './Home';
-import 'react-toastify/ReactToastify.min.css';
+import 'react-toastify/ReactToastify.css';
 import { useSelector } from 'react-redux';
 
 
