@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Prepare Backend Deployment Package
-        working-directory: ./backend
+        working-directory: /backend
         run: zip -r --quiet backend-deploy.zip . -x '*.git*'
 
       - name: Deploy Backend to Elastic Beanstalk
@@ -34,7 +34,7 @@ jobs:
           environment_name: Template-Generator-backend
           version_label: backend-v1.4
           region: us-west-2
-          deployment_package: ./backend/backend-deploy.zip
+          deployment_package: /backend/backend-deploy.zip
 
   deploy-frontend:
     runs-on: ubuntu-latest
@@ -43,7 +43,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Prepare Frontend Deployment Package
-        working-directory: ./frontend
+        working-directory: /frontend
         run: zip -r --quiet frontend-deploy.zip . -x '*.git*'
 
       - name: Deploy Frontend to Elastic Beanstalk
@@ -55,4 +55,4 @@ jobs:
           environment_name: Template-Generator-frontend
           version_label: frontend-v1.4
           region: us-west-2
-          deployment_package: ./frontend/frontend-deploy.zip
+          deployment_package: /frontend/frontend-deploy.zip
