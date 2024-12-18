@@ -14,16 +14,13 @@ COPY . .
 # Build the React app for production
 RUN npm run build
 
-# Use an Nginx image to serve the built app
-FROM nginx:alpine
 
-# Copy the build files from the previous stage
+
+FROM nginx:latest as prod
+
 COPY --from=build /app/build /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
 
+EXPOSE 80/tcp
 
-# Expose port 80 for the React app
-EXPOSE 80
-
-# Start Nginx to serve the app
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["/usr/sbin/nginx", "-g", "daemon off;"]

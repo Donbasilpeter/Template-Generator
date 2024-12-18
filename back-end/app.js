@@ -12,9 +12,7 @@ const app = express();
 const port = 8000;
 
 
-app.set('allowedOrigin', process.env.CORS_ORIGIN);
-const corsMiddleware = createCorsMiddleware(app.get('allowedOrigin'));
-app.use(corsMiddleware); // CORS middleware
+app.use(createCorsMiddleware(process.env.CORS_ORIGIN)); // CORS middleware
 
 
 app.use(bodyParser.json()); // Parse JSON requests

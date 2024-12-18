@@ -52,7 +52,7 @@ const Home = () => {
             borderRadius: 2,
             boxShadow: 3,
           }}
-          href="/create"
+          href="/login"
         >
           Start Creating
         </Button>

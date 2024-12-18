@@ -5,6 +5,8 @@ import { Box, Button, TextField, Typography, Card, CardContent } from '@mui/mate
 import { createAccountApi,loginApi } from '../Services/authService'; // Assume you have an API function for creating accounts
 import { login } from '../reducers/authSlice';
 import {  toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
+
 import { useNavigate } from 'react-router-dom';
 
 
@@ -64,7 +66,7 @@ const CreateAccount = () => {
                         if (res.status===200) {
                             const user = { email, token:res.token };
                             dispatch(login(user));
-                            navigate("/session")
+                            navigate("/chat")
                             toast.success("Successfully Logged In")
                         }
                         else{
@@ -198,6 +200,21 @@ const CreateAccount = () => {
                             Create Account
                         </Button>
                     </form>
+                    <Box
+                        display="flex"
+                        justifyContent="center"
+                        mt={2}
+                        sx={{
+                            fontSize: '14px',
+                        }}
+                    >
+                        <Typography>
+                           Already have an account?{' '}
+                            <Link to="/login" style={{ color: '#AF5D63', fontWeight: 'bold' }}>
+                                Log In
+                            </Link>
+                        </Typography>
+                    </Box>
                 </CardContent>
             </Card>
         </Box>
