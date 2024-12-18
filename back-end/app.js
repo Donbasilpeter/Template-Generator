@@ -17,9 +17,9 @@ app.use(createCorsMiddleware(process.env.CORS_ORIGIN)); // CORS middleware
 
 app.use(bodyParser.json()); // Parse JSON requests
 
-app.use('/auth', authRoutes); // Handle user registration and login
-app.use('/chat', chatRoutes); // Handle chat-related requests 
-app.use('/session', session); // Handle chat-related requests 
+app.use('/api/auth', authRoutes); // Handle user registration and login
+app.use('/api/chat', chatRoutes); // Handle chat-related requests 
+app.use('/api/session', session); // Handle chat-related requests 
 
 
 app.listen(port, () => {

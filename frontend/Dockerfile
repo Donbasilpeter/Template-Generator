@@ -7,6 +7,7 @@ WORKDIR /app
 # Install dependencies
 COPY package*.json ./
 RUN npm install --production
+RUN npm install -g serve
 
 # Copy the rest of the application files
 COPY . .
@@ -14,13 +15,6 @@ COPY . .
 # Build the React app for production
 RUN npm run build
 
+EXPOSE 3000
+CMD ["serve", "-s", "build", "-l", "3000" ]
 
-
-FROM nginx:latest as prod
-
-COPY --from=build /app/build /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/nginx.conf
-
-EXPOSE 80/tcp
-
-CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
