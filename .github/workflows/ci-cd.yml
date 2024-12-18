@@ -14,8 +14,6 @@ env:
   OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
   CORS_ORIGIN: ${{ secrets.CORS_ORIGIN }}
 
-
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -34,6 +32,6 @@ jobs:
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         application_name: Template-Generator
         environment_name: Template-Generator-prod
-        version_label: 1.1
+        version_label: 1.2
         region: us-west-2
         deployment_package: deploy.zip
