@@ -32,9 +32,9 @@ jobs:
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: Template-Generator
           environment_name: Template-Generator-backend
-          version_label: backend-v1.4
+          version_label: backend-v1.5
           region: us-west-2
-          deployment_package: ./backend/backend-deploy.zip
+          deployment_package: ./back-end/backend-deploy.zip
 
   deploy-frontend:
     runs-on: ubuntu-latest
@@ -53,6 +53,6 @@ jobs:
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: Template-Generator
           environment_name: Template-Generator-frontend
-          version_label: frontend-v1.4
+          version_label: frontend-v1.5
           region: us-west-2
           deployment_package: ./frontend/frontend-deploy.zip
