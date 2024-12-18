@@ -15,32 +15,15 @@ env:
   CORS_ORIGIN: ${{ secrets.CORS_ORIGIN }}
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout source code
-        uses: actions/checkout@v2
-
-      - name: Build Frontend Docker Image
-        working-directory: ./frontend
-        run: |
-          docker build -t donbasilpeter/frontend:latest .
-
-      - name: Build Backend Docker Image
-        working-directory: ./backend
-        run: |
-          docker build -t donbasilpeter/backend:latest .
-
   deploy-backend:
-    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code
         uses: actions/checkout@v2
 
-      - name: Zip Backend Deployment Package
+      - name: Prepare Backend Deployment Package
         working-directory: ./backend
-        run: zip -r backend-deploy.zip . -x '*.git*'
+        run: zip -r --quiet backend-deploy.zip . -x '*.git*'
 
       - name: Deploy Backend to Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v22
@@ -49,20 +32,19 @@ jobs:
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: Template-Generator
           environment_name: Template-Generator-backend
-          version_label: 1.4-backend
+          version_label: backend-v1.4
           region: us-west-2
-          deployment_package: backend-deploy.zip
+          deployment_package: ./backend/backend-deploy.zip
 
   deploy-frontend:
-    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code
         uses: actions/checkout@v2
 
-      - name: Zip Frontend Deployment Package
+      - name: Prepare Frontend Deployment Package
         working-directory: ./frontend
-        run: zip -r frontend-deploy.zip . -x '*.git*'
+        run: zip -r --quiet frontend-deploy.zip . -x '*.git*'
 
       - name: Deploy Frontend to Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v22
@@ -71,6 +53,6 @@ jobs:
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: Template-Generator
           environment_name: Template-Generator-frontend
-          version_label: 1.4-frontend
+          version_label: frontend-v1.4
           region: us-west-2
-          deployment_package: frontend-deploy.zip
+          deployment_package: ./frontend/frontend-deploy.zip
