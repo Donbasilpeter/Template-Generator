@@ -5,7 +5,6 @@ services:
       dockerfile: Dockerfile
     environment:
       - REACT_APP_BASE_URL=${REACT_APP_BASE_URL}
-    image: donbasilpeter/frontend:latest
     stdin_open: false  # Disable stdin in production
     tty: false  # Disable tty in production
     networks:
@@ -20,7 +19,6 @@ services:
       - JWT_SECRET=${JWT_SECRET}
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - CORS_ORIGIN=${CORS_ORIGIN}
-    image: donbasilpeter/backend:latest
     networks:
       - app-network
 
