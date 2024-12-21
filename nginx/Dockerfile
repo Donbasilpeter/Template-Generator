@@ -1,12 +1,6 @@
 # Use the lightweight Nginx image
 FROM nginx:alpine
 
-# Set the working directory
-WORKDIR /etc/nginx
-
-# Copy the custom Nginx configuration file
-COPY nginx.conf /etc/nginx/nginx.conf
-
 # Expose port 80 for HTTP traffic
 EXPOSE 80
 
