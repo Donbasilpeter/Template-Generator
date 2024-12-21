@@ -22,20 +22,6 @@ services:
     networks:
       - app-network
 
-  nginx:
-    image: nginx:alpine
-    container_name: nginx-proxy
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile
-    ports:
-      - "80:80"  # Expose port 80 for Nginx (frontend and backend will be routed through Nginx)
-    depends_on:
-      - frontend
-      - backend
-    networks:
-      - app-network
-
 networks:
   app-network:
     driver: bridge
