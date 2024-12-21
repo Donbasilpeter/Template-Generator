@@ -1,10 +1,14 @@
+# Use the lightweight Nginx image
 FROM nginx:alpine
 
-# Copy the custom nginx.conf into the container
+# Set the working directory
+WORKDIR /etc/nginx
+
+# Copy the custom Nginx configuration file
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Expose port 80 to allow traffic
+# Expose port 80 for HTTP traffic
 EXPOSE 80
 
-# Start Nginx in the foreground
+# Run Nginx in the foreground
 CMD ["nginx", "-g", "daemon off;"]
