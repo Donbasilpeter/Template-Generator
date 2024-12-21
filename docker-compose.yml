@@ -3,25 +3,16 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    environment:
-      - REACT_APP_BASE_URL=${REACT_APP_BASE_URL}
     stdin_open: false  # Disable stdin in production
     tty: false  # Disable tty in production
     networks:
       - app-network
-
   backend:
     build:
       context: ./back-end
       dockerfile: Dockerfile
-    environment:
-      - MONGODB_URI=${MONGODB_URI}
-      - JWT_SECRET=${JWT_SECRET}
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - CORS_ORIGIN=${CORS_ORIGIN}
     networks:
       - app-network
-
   reverse-proxy:
     build:
       context: ./reverse-proxy
